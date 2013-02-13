@@ -1,0 +1,7247 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>Data retention converter</title>
+    <script src="http://code.jquery.com/jquery-1.9.0.min.js"></script>
+    <script src="jquery.datepicker.js"></script>
+   </head>
+<body>
+<script>
+
+//pomocna funkce	
+String.prototype.replaceAll = function(str1, str2, ignore)
+{
+   return this.replace(new RegExp(str1.replace(/([\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g, function(c){return "\\" + c;}), "g"+(ignore?"i":"")), str2);
+};
+
+Date.prototype.addHours= function(h){
+    this.setHours(this.getHours()+h);
+    return this;
+}
+function timestr(date){
+    h= date.getHours(),
+    m= date.getMinutes(),
+    s= date.getSeconds();
+    if(h<10) h= '0'+h;
+    if(m<10) m= '0'+m;
+    if(s<10) s= '0'+s;
+    return $.datepicker.formatDate('yy/mm/dd ', date)+h+':'+m+':'+s+' +0000';
+}
+
+function converter(x)
+{
+  var lastk = null;
+  var laststart = null;
+  for (var k in x)
+  {
+    laststart = x[k].start;
+    x[k].start = x[k].start.replaceAll("-", "/")+' +0000';
+    x[k].end = x[k].start.replaceAll("-", "/")+' +0000';
+    if (lastk != null)
+    {
+      x[lastk].end = x[k].start;
+    }
+    lastk = k;
+  }
+
+  x[lastk].end = timestr((new Date(laststart)).addHours(1));
+  
+  return x;
+}
+
+// sem vlozte JSON vygenerovany Pyhtonem
+//vystup v prohlizeci pak vykopirujte do finalniho skriptu lspoints.js
+var dataset = [
+    {
+        "start": "2012-10-14 22:48:57", 
+        "title": "Internet", 
+        "end": "2012-10-14 22:48:58", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 22:48:57", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0939213, 
+            "lon": 14.3412069
+        }
+    }, 
+    {
+        "start": "2012-10-14 23:48:57", 
+        "title": "Internet", 
+        "end": "2012-10-14 23:48:58", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 23:48:57", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0939213, 
+            "lon": 14.3412069
+        }
+    }, 
+    {
+        "start": "2012-10-14 23:48:57", 
+        "title": "Internet", 
+        "end": "2012-10-14 23:48:58", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 23:48:57", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0939213, 
+            "lon": 14.3412069
+        }
+    }, 
+    {
+        "start": "2012-10-15 00:48:57", 
+        "title": "Internet", 
+        "end": "2012-10-15 00:48:58", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 00:48:57", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0939213, 
+            "lon": 14.3412069
+        }
+    }, 
+    {
+        "start": "2012-10-15 01:48:57", 
+        "title": "Internet", 
+        "end": "2012-10-15 01:48:58", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 01:48:57", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0939213, 
+            "lon": 14.3412069
+        }
+    }, 
+    {
+        "start": "2012-10-15 02:48:57", 
+        "title": "Internet", 
+        "end": "2012-10-15 02:48:58", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 02:48:57", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0939213, 
+            "lon": 14.3412069
+        }
+    }, 
+    {
+        "start": "2012-10-15 03:48:57", 
+        "title": "Internet", 
+        "end": "2012-10-15 03:48:58", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 03:48:57", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0939213, 
+            "lon": 14.3412069
+        }
+    }, 
+    {
+        "start": "2012-10-15 04:48:57", 
+        "title": "Internet", 
+        "end": "2012-10-15 04:48:58", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 04:48:57", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0939213, 
+            "lon": 14.3412069
+        }
+    }, 
+    {
+        "start": "2012-10-15 05:48:57", 
+        "title": "Internet", 
+        "end": "2012-10-15 05:48:58", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 05:48:57", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0939213, 
+            "lon": 14.3412069
+        }
+    }, 
+    {
+        "start": "2012-10-15 06:48:57", 
+        "title": "Internet", 
+        "end": "2012-10-15 06:48:58", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 06:48:57", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0939213, 
+            "lon": 14.3412069
+        }
+    }, 
+    {
+        "start": "2012-10-15 07:48:57", 
+        "title": "Internet", 
+        "end": "2012-10-15 07:48:58", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 07:48:57", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0939213, 
+            "lon": 14.3412069
+        }
+    }, 
+    {
+        "start": "2012-10-15 07:50:18", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-15 07:50:19", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 07:50:18", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0939213, 
+            "lon": 14.3412069
+        }
+    }, 
+    {
+        "start": "2012-10-15 08:48:57", 
+        "title": "Internet", 
+        "end": "2012-10-15 08:48:58", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 08:48:57", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0939213, 
+            "lon": 14.3412069
+        }
+    }, 
+    {
+        "start": "2012-10-15 09:14:54", 
+        "title": "Internet", 
+        "end": "2012-10-15 09:14:55", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 09:14:54", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-15 09:34:30", 
+        "title": "Internet", 
+        "end": "2012-10-15 09:34:31", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 09:34:30", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0755381, 
+            "lon": 14.4378005
+        }
+    }, 
+    {
+        "start": "2012-10-15 09:38:04", 
+        "title": "Internet", 
+        "end": "2012-10-15 09:38:05", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 09:38:04", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0755381, 
+            "lon": 14.4378005
+        }
+    }, 
+    {
+        "start": "2012-10-15 09:47:00", 
+        "title": "Internet", 
+        "end": "2012-10-15 09:47:01", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 09:47:00", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0814203, 
+            "lon": 14.422498
+        }
+    }, 
+    {
+        "start": "2012-10-15 10:47:00", 
+        "title": "Internet", 
+        "end": "2012-10-15 10:47:01", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 10:47:00", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-15 11:47:00", 
+        "title": "Internet", 
+        "end": "2012-10-15 11:47:01", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 11:47:00", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-15 11:55:26", 
+        "title": "Příchozí hovor", 
+        "end": "2012-10-15 11:55:27", 
+        "options": {
+            "theme": "red", 
+            "description": "Příchozí hovor v 11:55:26", 
+            "tags": "['Příchozí hovor']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-15 11:59:46", 
+        "title": "Internet", 
+        "end": "2012-10-15 11:59:47", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 11:59:46", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-15 12:07:38", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-15 12:07:39", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 12:07:38", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-15 12:47:00", 
+        "title": "Internet", 
+        "end": "2012-10-15 12:47:01", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 12:47:00", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-15 12:50:58", 
+        "title": "Internet", 
+        "end": "2012-10-15 12:50:59", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 12:50:58", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-15 13:03:09", 
+        "title": "Internet", 
+        "end": "2012-10-15 13:03:10", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 13:03:09", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.082309, 
+            "lon": 14.4194829
+        }
+    }, 
+    {
+        "start": "2012-10-15 13:03:40", 
+        "title": "Internet", 
+        "end": "2012-10-15 13:03:41", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 13:03:40", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-15 13:07:45", 
+        "title": "Příchozí hovor", 
+        "end": "2012-10-15 13:07:46", 
+        "options": {
+            "theme": "red", 
+            "description": "Příchozí hovor v 13:07:45", 
+            "tags": "['Příchozí hovor']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-15 13:19:11", 
+        "title": "Internet", 
+        "end": "2012-10-15 13:19:12", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 13:19:11", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-15 14:19:11", 
+        "title": "Internet", 
+        "end": "2012-10-15 14:19:12", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 14:19:11", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.082309, 
+            "lon": 14.4194829
+        }
+    }, 
+    {
+        "start": "2012-10-15 14:44:35", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-15 14:44:36", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 14:44:35", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-15 15:19:11", 
+        "title": "Internet", 
+        "end": "2012-10-15 15:19:12", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 15:19:11", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.082309, 
+            "lon": 14.4194829
+        }
+    }, 
+    {
+        "start": "2012-10-15 15:30:10", 
+        "title": "Internet", 
+        "end": "2012-10-15 15:30:11", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 15:30:10", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0830549, 
+            "lon": 14.4215519
+        }
+    }, 
+    {
+        "start": "2012-10-15 15:34:49", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-15 15:34:50", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 15:34:49", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0755381, 
+            "lon": 14.4378005
+        }
+    }, 
+    {
+        "start": "2012-10-15 15:50:39", 
+        "title": "Internet", 
+        "end": "2012-10-15 15:50:40", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 15:50:39", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0584872, 
+            "lon": 14.3783383
+        }
+    }, 
+    {
+        "start": "2012-10-15 15:55:31", 
+        "title": "Internet", 
+        "end": "2012-10-15 15:55:32", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 15:55:31", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0584872, 
+            "lon": 14.3783383
+        }
+    }, 
+    {
+        "start": "2012-10-15 15:56:50", 
+        "title": "Internet", 
+        "end": "2012-10-15 15:56:51", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 15:56:50", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0584872, 
+            "lon": 14.3783383
+        }
+    }, 
+    {
+        "start": "2012-10-15 16:02:22", 
+        "title": "Internet", 
+        "end": "2012-10-15 16:02:23", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 16:02:22", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0584872, 
+            "lon": 14.3783383
+        }
+    }, 
+    {
+        "start": "2012-10-15 16:05:51", 
+        "title": "Internet", 
+        "end": "2012-10-15 16:05:52", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 16:05:51", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0584872, 
+            "lon": 14.3783383
+        }
+    }, 
+    {
+        "start": "2012-10-15 16:08:04", 
+        "title": "Internet", 
+        "end": "2012-10-15 16:08:05", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 16:08:04", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0584872, 
+            "lon": 14.3783383
+        }
+    }, 
+    {
+        "start": "2012-10-15 16:08:51", 
+        "title": "Internet", 
+        "end": "2012-10-15 16:08:52", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 16:08:51", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0584872, 
+            "lon": 14.3783383
+        }
+    }, 
+    {
+        "start": "2012-10-15 16:09:42", 
+        "title": "Internet", 
+        "end": "2012-10-15 16:09:43", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 16:09:42", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0584872, 
+            "lon": 14.3783383
+        }
+    }, 
+    {
+        "start": "2012-10-15 16:12:42", 
+        "title": "Internet", 
+        "end": "2012-10-15 16:12:43", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 16:12:42", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0584872, 
+            "lon": 14.3783383
+        }
+    }, 
+    {
+        "start": "2012-10-15 16:55:18", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-15 16:55:19", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 16:55:18", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0584872, 
+            "lon": 14.3783383
+        }
+    }, 
+    {
+        "start": "2012-10-15 17:07:58", 
+        "title": "Internet", 
+        "end": "2012-10-15 17:07:59", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 17:07:58", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0584872, 
+            "lon": 14.3783383
+        }
+    }, 
+    {
+        "start": "2012-10-15 17:13:21", 
+        "title": "Internet", 
+        "end": "2012-10-15 17:13:22", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 17:13:21", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0584872, 
+            "lon": 14.3783383
+        }
+    }, 
+    {
+        "start": "2012-10-15 17:20:35", 
+        "title": "Internet", 
+        "end": "2012-10-15 17:20:36", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 17:20:35", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0584872, 
+            "lon": 14.3783383
+        }
+    }, 
+    {
+        "start": "2012-10-15 17:28:48", 
+        "title": "Internet", 
+        "end": "2012-10-15 17:28:49", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 17:28:48", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0584872, 
+            "lon": 14.3783383
+        }
+    }, 
+    {
+        "start": "2012-10-15 17:36:10", 
+        "title": "Odchozí hovor", 
+        "end": "2012-10-15 17:36:11", 
+        "options": {
+            "theme": "red", 
+            "description": "Odchozí hovor v 17:36:10", 
+            "tags": "['Odchozí hovor']"
+        }, 
+        "point": {
+            "lat": 50.0584872, 
+            "lon": 14.3783383
+        }
+    }, 
+    {
+        "start": "2012-10-15 17:36:44", 
+        "title": "Internet", 
+        "end": "2012-10-15 17:36:45", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 17:36:44", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0584872, 
+            "lon": 14.3783383
+        }
+    }, 
+    {
+        "start": "2012-10-15 17:37:05", 
+        "title": "Internet", 
+        "end": "2012-10-15 17:37:06", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 17:37:05", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0584872, 
+            "lon": 14.3783383
+        }
+    }, 
+    {
+        "start": "2012-10-15 17:39:30", 
+        "title": "Internet", 
+        "end": "2012-10-15 17:39:31", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 17:39:30", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0755381, 
+            "lon": 14.4378005
+        }
+    }, 
+    {
+        "start": "2012-10-15 17:59:50", 
+        "title": "Internet", 
+        "end": "2012-10-15 17:59:51", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 17:59:50", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-15 18:59:50", 
+        "title": "Internet", 
+        "end": "2012-10-15 18:59:51", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 18:59:50", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-15 19:23:42", 
+        "title": "Internet", 
+        "end": "2012-10-15 19:23:43", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 19:23:42", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0814203, 
+            "lon": 14.422498
+        }
+    }, 
+    {
+        "start": "2012-10-15 19:46:41", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-15 19:46:42", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 19:46:41", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0814203, 
+            "lon": 14.422498
+        }
+    }, 
+    {
+        "start": "2012-10-15 19:47:13", 
+        "title": "Odchozí SMS", 
+        "end": "2012-10-15 19:47:14", 
+        "options": {
+            "theme": "green", 
+            "description": "Odchozí SMS v 19:47:13", 
+            "tags": "['Odchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0814203, 
+            "lon": 14.422498
+        }
+    }, 
+    {
+        "start": "2012-10-15 19:47:14", 
+        "title": "Internet", 
+        "end": "2012-10-15 19:47:15", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 19:47:14", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0814203, 
+            "lon": 14.422498
+        }
+    }, 
+    {
+        "start": "2012-10-15 19:57:32", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-15 19:57:33", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 19:57:32", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0814203, 
+            "lon": 14.422498
+        }
+    }, 
+    {
+        "start": "2012-10-15 19:57:59", 
+        "title": "Odchozí SMS", 
+        "end": "2012-10-15 19:58:00", 
+        "options": {
+            "theme": "green", 
+            "description": "Odchozí SMS v 19:57:59", 
+            "tags": "['Odchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0814203, 
+            "lon": 14.422498
+        }
+    }, 
+    {
+        "start": "2012-10-15 19:59:20", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-15 19:59:21", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 19:59:20", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0814203, 
+            "lon": 14.422498
+        }
+    }, 
+    {
+        "start": "2012-10-15 20:00:08", 
+        "title": "Odchozí hovor", 
+        "end": "2012-10-15 20:00:09", 
+        "options": {
+            "theme": "red", 
+            "description": "Odchozí hovor v 20:00:08", 
+            "tags": "['Odchozí hovor']"
+        }, 
+        "point": {
+            "lat": 50.0814203, 
+            "lon": 14.422498
+        }
+    }, 
+    {
+        "start": "2012-10-15 20:05:47", 
+        "title": "Internet", 
+        "end": "2012-10-15 20:05:48", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 20:05:47", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0814203, 
+            "lon": 14.422498
+        }
+    }, 
+    {
+        "start": "2012-10-15 20:10:32", 
+        "title": "Internet", 
+        "end": "2012-10-15 20:10:33", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 20:10:32", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0814203, 
+            "lon": 14.422498
+        }
+    }, 
+    {
+        "start": "2012-10-15 20:11:17", 
+        "title": "Odchozí SMS", 
+        "end": "2012-10-15 20:11:18", 
+        "options": {
+            "theme": "green", 
+            "description": "Odchozí SMS v 20:11:17", 
+            "tags": "['Odchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0814203, 
+            "lon": 14.422498
+        }
+    }, 
+    {
+        "start": "2012-10-15 20:13:27", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-15 20:13:28", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 20:13:27", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0814203, 
+            "lon": 14.422498
+        }
+    }, 
+    {
+        "start": "2012-10-15 20:14:25", 
+        "title": "Odchozí SMS", 
+        "end": "2012-10-15 20:14:26", 
+        "options": {
+            "theme": "green", 
+            "description": "Odchozí SMS v 20:14:25", 
+            "tags": "['Odchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0814203, 
+            "lon": 14.422498
+        }
+    }, 
+    {
+        "start": "2012-10-15 20:15:53", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-15 20:15:54", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 20:15:53", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0814203, 
+            "lon": 14.422498
+        }
+    }, 
+    {
+        "start": "2012-10-15 20:22:55", 
+        "title": "Odchozí SMS", 
+        "end": "2012-10-15 20:22:56", 
+        "options": {
+            "theme": "green", 
+            "description": "Odchozí SMS v 20:22:55", 
+            "tags": "['Odchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0814203, 
+            "lon": 14.422498
+        }
+    }, 
+    {
+        "start": "2012-10-15 21:10:32", 
+        "title": "Internet", 
+        "end": "2012-10-15 21:10:33", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 21:10:32", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0814203, 
+            "lon": 14.422498
+        }
+    }, 
+    {
+        "start": "2012-10-15 22:10:32", 
+        "title": "Internet", 
+        "end": "2012-10-15 22:10:33", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 22:10:32", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0814203, 
+            "lon": 14.422498
+        }
+    }, 
+    {
+        "start": "2012-10-15 23:10:32", 
+        "title": "Internet", 
+        "end": "2012-10-15 23:10:33", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 23:10:32", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0814203, 
+            "lon": 14.422498
+        }
+    }, 
+    {
+        "start": "2012-10-15 23:51:39", 
+        "title": "Internet", 
+        "end": "2012-10-15 23:51:40", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 23:51:39", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0840847, 
+            "lon": 14.4227067
+        }
+    }, 
+    {
+        "start": "2012-10-15 23:59:22", 
+        "title": "Internet", 
+        "end": "2012-10-15 23:59:23", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 23:59:22", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0755381, 
+            "lon": 14.4378005
+        }
+    }, 
+    {
+        "start": "2012-10-15 23:59:22", 
+        "title": "Internet", 
+        "end": "2012-10-15 23:59:23", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 23:59:22", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0755381, 
+            "lon": 14.4378005
+        }
+    }, 
+    {
+        "start": "2012-10-16 00:05:29", 
+        "title": "Internet", 
+        "end": "2012-10-16 00:05:30", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 00:05:29", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0995098, 
+            "lon": 14.3899441
+        }
+    }, 
+    {
+        "start": "2012-10-16 00:27:57", 
+        "title": "Internet", 
+        "end": "2012-10-16 00:27:58", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 00:27:57", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0939213, 
+            "lon": 14.3412069
+        }
+    }, 
+    {
+        "start": "2012-10-16 00:29:09", 
+        "title": "Internet", 
+        "end": "2012-10-16 00:29:10", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 00:29:09", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-16 01:29:09", 
+        "title": "Internet", 
+        "end": "2012-10-16 01:29:10", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 01:29:09", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-16 02:29:09", 
+        "title": "Internet", 
+        "end": "2012-10-16 02:29:10", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 02:29:09", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-16 03:29:09", 
+        "title": "Internet", 
+        "end": "2012-10-16 03:29:10", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 03:29:09", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-16 04:29:09", 
+        "title": "Internet", 
+        "end": "2012-10-16 04:29:10", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 04:29:09", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-16 05:29:09", 
+        "title": "Internet", 
+        "end": "2012-10-16 05:29:10", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 05:29:09", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-16 06:29:09", 
+        "title": "Internet", 
+        "end": "2012-10-16 06:29:10", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 06:29:09", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-16 06:57:18", 
+        "title": "Internet", 
+        "end": "2012-10-16 06:57:19", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 06:57:18", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0939213, 
+            "lon": 14.3412069
+        }
+    }, 
+    {
+        "start": "2012-10-16 07:00:06", 
+        "title": "Internet", 
+        "end": "2012-10-16 07:00:07", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 07:00:06", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-16 07:23:46", 
+        "title": "Internet", 
+        "end": "2012-10-16 07:23:47", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 07:23:46", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0983246, 
+            "lon": 14.3591357
+        }
+    }, 
+    {
+        "start": "2012-10-16 07:24:13", 
+        "title": "Internet", 
+        "end": "2012-10-16 07:24:14", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 07:24:13", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0961162, 
+            "lon": 14.3664509
+        }
+    }, 
+    {
+        "start": "2012-10-16 07:27:34", 
+        "title": "Internet", 
+        "end": "2012-10-16 07:27:35", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 07:27:34", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0961162, 
+            "lon": 14.3664509
+        }
+    }, 
+    {
+        "start": "2012-10-16 07:31:37", 
+        "title": "Internet", 
+        "end": "2012-10-16 07:31:38", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 07:31:37", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0995098, 
+            "lon": 14.3899441
+        }
+    }, 
+    {
+        "start": "2012-10-16 07:32:59", 
+        "title": "Internet", 
+        "end": "2012-10-16 07:33:00", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 07:32:59", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0755381, 
+            "lon": 14.4378005
+        }
+    }, 
+    {
+        "start": "2012-10-16 07:43:36", 
+        "title": "Internet", 
+        "end": "2012-10-16 07:43:37", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 07:43:36", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0859272, 
+            "lon": 14.4265389
+        }
+    }, 
+    {
+        "start": "2012-10-16 08:20:30", 
+        "title": "Internet", 
+        "end": "2012-10-16 08:20:31", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 08:20:30", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0814203, 
+            "lon": 14.422498
+        }
+    }, 
+    {
+        "start": "2012-10-16 08:35:16", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-16 08:35:17", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 08:35:16", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0842863, 
+            "lon": 14.4182351
+        }
+    }, 
+    {
+        "start": "2012-10-16 08:50:45", 
+        "title": "Internet", 
+        "end": "2012-10-16 08:50:46", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 08:50:45", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0847618, 
+            "lon": 14.4181775
+        }
+    }, 
+    {
+        "start": "2012-10-16 08:52:23", 
+        "title": "Internet", 
+        "end": "2012-10-16 08:52:24", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 08:52:23", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0842863, 
+            "lon": 14.4182351
+        }
+    }, 
+    {
+        "start": "2012-10-16 09:20:32", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-16 09:20:33", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 09:20:32", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0842863, 
+            "lon": 14.4182351
+        }
+    }, 
+    {
+        "start": "2012-10-16 09:48:11", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-16 09:48:12", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 09:48:11", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0842863, 
+            "lon": 14.4182351
+        }
+    }, 
+    {
+        "start": "2012-10-16 09:52:23", 
+        "title": "Internet", 
+        "end": "2012-10-16 09:52:24", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 09:52:23", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0842863, 
+            "lon": 14.4182351
+        }
+    }, 
+    {
+        "start": "2012-10-16 10:28:40", 
+        "title": "Odchozí hovor", 
+        "end": "2012-10-16 10:28:41", 
+        "options": {
+            "theme": "red", 
+            "description": "Odchozí hovor v 10:28:40", 
+            "tags": "['Odchozí hovor']"
+        }, 
+        "point": {
+            "lat": 50.0842863, 
+            "lon": 14.4182351
+        }
+    }, 
+    {
+        "start": "2012-10-16 10:32:22", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-16 10:32:23", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 10:32:22", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0812666, 
+            "lon": 14.4149822
+        }
+    }, 
+    {
+        "start": "2012-10-16 10:35:01", 
+        "title": "Odchozí SMS", 
+        "end": "2012-10-16 10:35:02", 
+        "options": {
+            "theme": "green", 
+            "description": "Odchozí SMS v 10:35:01", 
+            "tags": "['Odchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.082309, 
+            "lon": 14.4194829
+        }
+    }, 
+    {
+        "start": "2012-10-16 10:52:23", 
+        "title": "Internet", 
+        "end": "2012-10-16 10:52:24", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 10:52:23", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0842863, 
+            "lon": 14.4182351
+        }
+    }, 
+    {
+        "start": "2012-10-16 11:52:23", 
+        "title": "Internet", 
+        "end": "2012-10-16 11:52:24", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 11:52:23", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0842863, 
+            "lon": 14.4182351
+        }
+    }, 
+    {
+        "start": "2012-10-16 12:00:30", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-16 12:00:31", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 12:00:30", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-16 12:11:05", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-16 12:11:06", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 12:11:05", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-16 12:19:58", 
+        "title": "Internet", 
+        "end": "2012-10-16 12:19:59", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 12:19:58", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-16 12:24:45", 
+        "title": "Internet", 
+        "end": "2012-10-16 12:24:46", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 12:24:45", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-16 12:25:13", 
+        "title": "Internet", 
+        "end": "2012-10-16 12:25:14", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 12:25:13", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-16 12:36:15", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-16 12:36:16", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 12:36:15", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-16 12:39:02", 
+        "title": "Odchozí SMS", 
+        "end": "2012-10-16 12:39:03", 
+        "options": {
+            "theme": "green", 
+            "description": "Odchozí SMS v 12:39:02", 
+            "tags": "['Odchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-16 13:19:37", 
+        "title": "Internet", 
+        "end": "2012-10-16 13:19:38", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 13:19:37", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-16 13:21:02", 
+        "title": "Internet", 
+        "end": "2012-10-16 13:21:03", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 13:21:02", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.082309, 
+            "lon": 14.4194829
+        }
+    }, 
+    {
+        "start": "2012-10-16 13:21:13", 
+        "title": "Internet", 
+        "end": "2012-10-16 13:21:14", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 13:21:13", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.082309, 
+            "lon": 14.4194829
+        }
+    }, 
+    {
+        "start": "2012-10-16 13:39:58", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-16 13:39:59", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 13:39:58", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-16 13:40:18", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-16 13:40:19", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 13:40:18", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-16 13:44:26", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-16 13:44:27", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 13:44:26", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-16 13:53:50", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-16 13:53:51", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 13:53:50", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-16 13:54:25", 
+        "title": "Odchozí SMS", 
+        "end": "2012-10-16 13:54:26", 
+        "options": {
+            "theme": "green", 
+            "description": "Odchozí SMS v 13:54:25", 
+            "tags": "['Odchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-16 13:54:54", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-16 13:54:55", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 13:54:54", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-16 13:55:32", 
+        "title": "Odchozí SMS", 
+        "end": "2012-10-16 13:55:33", 
+        "options": {
+            "theme": "green", 
+            "description": "Odchozí SMS v 13:55:32", 
+            "tags": "['Odchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-16 14:21:13", 
+        "title": "Internet", 
+        "end": "2012-10-16 14:21:14", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 14:21:13", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-16 15:21:13", 
+        "title": "Internet", 
+        "end": "2012-10-16 15:21:14", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 15:21:13", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-16 16:21:13", 
+        "title": "Internet", 
+        "end": "2012-10-16 16:21:14", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 16:21:13", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-16 17:14:01", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-16 17:14:02", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 17:14:01", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-16 17:14:59", 
+        "title": "Odchozí SMS", 
+        "end": "2012-10-16 17:15:00", 
+        "options": {
+            "theme": "green", 
+            "description": "Odchozí SMS v 17:14:59", 
+            "tags": "['Odchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-16 17:17:20", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-16 17:17:21", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 17:17:20", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-16 17:17:42", 
+        "title": "Odchozí SMS", 
+        "end": "2012-10-16 17:17:43", 
+        "options": {
+            "theme": "green", 
+            "description": "Odchozí SMS v 17:17:42", 
+            "tags": "['Odchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-16 17:21:13", 
+        "title": "Internet", 
+        "end": "2012-10-16 17:21:14", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 17:21:13", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-16 18:21:13", 
+        "title": "Internet", 
+        "end": "2012-10-16 18:21:14", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 18:21:13", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-16 19:05:53", 
+        "title": "Internet", 
+        "end": "2012-10-16 19:05:54", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 19:05:53", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0840847, 
+            "lon": 14.4227067
+        }
+    }, 
+    {
+        "start": "2012-10-16 19:08:57", 
+        "title": "Odchozí SMS", 
+        "end": "2012-10-16 19:08:58", 
+        "options": {
+            "theme": "green", 
+            "description": "Odchozí SMS v 19:08:57", 
+            "tags": "['Odchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0755381, 
+            "lon": 14.4378005
+        }
+    }, 
+    {
+        "start": "2012-10-16 19:18:51", 
+        "title": "Internet", 
+        "end": "2012-10-16 19:18:52", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 19:18:51", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0995098, 
+            "lon": 14.3899441
+        }
+    }, 
+    {
+        "start": "2012-10-16 19:24:28", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-16 19:24:29", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 19:24:28", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0901598, 
+            "lon": 14.3634461
+        }
+    }, 
+    {
+        "start": "2012-10-16 19:24:57", 
+        "title": "Odchozí SMS", 
+        "end": "2012-10-16 19:24:58", 
+        "options": {
+            "theme": "green", 
+            "description": "Odchozí SMS v 19:24:57", 
+            "tags": "['Odchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0963542, 
+            "lon": 14.3590518
+        }
+    }, 
+    {
+        "start": "2012-10-16 19:35:04", 
+        "title": "Internet", 
+        "end": "2012-10-16 19:35:05", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 19:35:04", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0939213, 
+            "lon": 14.3412069
+        }
+    }, 
+    {
+        "start": "2012-10-16 19:37:05", 
+        "title": "Internet", 
+        "end": "2012-10-16 19:37:06", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 19:37:05", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-16 20:21:18", 
+        "title": "Internet", 
+        "end": "2012-10-16 20:21:19", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 20:21:18", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0939213, 
+            "lon": 14.3412069
+        }
+    }, 
+    {
+        "start": "2012-10-16 20:22:20", 
+        "title": "Internet", 
+        "end": "2012-10-16 20:22:21", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 20:22:20", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-16 20:27:34", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-16 20:27:35", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 20:27:34", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0892652, 
+            "lon": 14.3273092
+        }
+    }, 
+    {
+        "start": "2012-10-16 21:22:20", 
+        "title": "Internet", 
+        "end": "2012-10-16 21:22:21", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 21:22:20", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-16 22:22:20", 
+        "title": "Internet", 
+        "end": "2012-10-16 22:22:21", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 22:22:20", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-16 23:12:42", 
+        "title": "Internet", 
+        "end": "2012-10-16 23:12:43", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 23:12:42", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0939213, 
+            "lon": 14.3412069
+        }
+    }, 
+    {
+        "start": "2012-10-16 23:13:47", 
+        "title": "Internet", 
+        "end": "2012-10-16 23:13:48", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 23:13:47", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-16 23:13:47", 
+        "title": "Internet", 
+        "end": "2012-10-16 23:13:48", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 23:13:47", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-17 00:13:47", 
+        "title": "Internet", 
+        "end": "2012-10-17 00:13:48", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 00:13:47", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-17 01:13:47", 
+        "title": "Internet", 
+        "end": "2012-10-17 01:13:48", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 01:13:47", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-17 02:13:47", 
+        "title": "Internet", 
+        "end": "2012-10-17 02:13:48", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 02:13:47", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-17 03:13:47", 
+        "title": "Internet", 
+        "end": "2012-10-17 03:13:48", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 03:13:47", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-17 04:13:47", 
+        "title": "Internet", 
+        "end": "2012-10-17 04:13:48", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 04:13:47", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-17 05:13:47", 
+        "title": "Internet", 
+        "end": "2012-10-17 05:13:48", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 05:13:47", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-17 06:13:47", 
+        "title": "Internet", 
+        "end": "2012-10-17 06:13:48", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 06:13:47", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-17 07:13:47", 
+        "title": "Internet", 
+        "end": "2012-10-17 07:13:48", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 07:13:47", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-17 08:13:47", 
+        "title": "Internet", 
+        "end": "2012-10-17 08:13:48", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 08:13:47", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-17 09:06:53", 
+        "title": "Internet", 
+        "end": "2012-10-17 09:06:54", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 09:06:53", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0939213, 
+            "lon": 14.3412069
+        }
+    }, 
+    {
+        "start": "2012-10-17 09:13:04", 
+        "title": "Internet", 
+        "end": "2012-10-17 09:13:05", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 09:13:04", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-17 09:31:04", 
+        "title": "Internet", 
+        "end": "2012-10-17 09:31:05", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 09:31:04", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0755381, 
+            "lon": 14.4378005
+        }
+    }, 
+    {
+        "start": "2012-10-17 09:40:09", 
+        "title": "Internet", 
+        "end": "2012-10-17 09:40:10", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 09:40:09", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0840847, 
+            "lon": 14.4227067
+        }
+    }, 
+    {
+        "start": "2012-10-17 09:41:41", 
+        "title": "Internet", 
+        "end": "2012-10-17 09:41:42", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 09:41:41", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0814203, 
+            "lon": 14.422498
+        }
+    }, 
+    {
+        "start": "2012-10-17 09:44:03", 
+        "title": "Internet", 
+        "end": "2012-10-17 09:44:04", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 09:44:03", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0830549, 
+            "lon": 14.4215519
+        }
+    }, 
+    {
+        "start": "2012-10-17 09:47:01", 
+        "title": "Internet", 
+        "end": "2012-10-17 09:47:02", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 09:47:01", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0814203, 
+            "lon": 14.422498
+        }
+    }, 
+    {
+        "start": "2012-10-17 10:40:48", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-17 10:40:49", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 10:40:48", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-17 10:40:51", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-17 10:40:52", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 10:40:51", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-17 10:40:54", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-17 10:40:55", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 10:40:54", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-17 10:42:06", 
+        "title": "Odchozí SMS", 
+        "end": "2012-10-17 10:42:07", 
+        "options": {
+            "theme": "green", 
+            "description": "Odchozí SMS v 10:42:06", 
+            "tags": "['Odchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-17 10:47:01", 
+        "title": "Internet", 
+        "end": "2012-10-17 10:47:02", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 10:47:01", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-17 11:47:01", 
+        "title": "Internet", 
+        "end": "2012-10-17 11:47:02", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 11:47:01", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-17 12:47:01", 
+        "title": "Internet", 
+        "end": "2012-10-17 12:47:02", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 12:47:01", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-17 13:05:57", 
+        "title": "Internet", 
+        "end": "2012-10-17 13:05:58", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 13:05:57", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-17 13:18:06", 
+        "title": "Internet", 
+        "end": "2012-10-17 13:18:07", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 13:18:06", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-17 13:18:11", 
+        "title": "Odchozí SMS", 
+        "end": "2012-10-17 13:18:12", 
+        "options": {
+            "theme": "green", 
+            "description": "Odchozí SMS v 13:18:11", 
+            "tags": "['Odchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-17 13:20:17", 
+        "title": "Internet", 
+        "end": "2012-10-17 13:20:18", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 13:20:17", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-17 13:32:06", 
+        "title": "Internet", 
+        "end": "2012-10-17 13:32:07", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 13:32:06", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-17 13:32:50", 
+        "title": "Internet", 
+        "end": "2012-10-17 13:32:51", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 13:32:50", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-17 13:38:33", 
+        "title": "Internet", 
+        "end": "2012-10-17 13:38:34", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 13:38:33", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-17 14:28:08", 
+        "title": "Odchozí SMS", 
+        "end": "2012-10-17 14:28:09", 
+        "options": {
+            "theme": "green", 
+            "description": "Odchozí SMS v 14:28:08", 
+            "tags": "['Odchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-17 14:38:33", 
+        "title": "Internet", 
+        "end": "2012-10-17 14:38:34", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 14:38:33", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.082309, 
+            "lon": 14.4194829
+        }
+    }, 
+    {
+        "start": "2012-10-17 14:43:08", 
+        "title": "Odchozí SMS", 
+        "end": "2012-10-17 14:43:09", 
+        "options": {
+            "theme": "green", 
+            "description": "Odchozí SMS v 14:43:08", 
+            "tags": "['Odchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-17 14:58:08", 
+        "title": "Odchozí SMS", 
+        "end": "2012-10-17 14:58:09", 
+        "options": {
+            "theme": "green", 
+            "description": "Odchozí SMS v 14:58:08", 
+            "tags": "['Odchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-17 15:13:08", 
+        "title": "Odchozí SMS", 
+        "end": "2012-10-17 15:13:09", 
+        "options": {
+            "theme": "green", 
+            "description": "Odchozí SMS v 15:13:08", 
+            "tags": "['Odchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-17 15:35:06", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-17 15:35:07", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 15:35:06", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-17 15:35:51", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-17 15:35:52", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 15:35:51", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-17 15:38:33", 
+        "title": "Internet", 
+        "end": "2012-10-17 15:38:34", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 15:38:33", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.082309, 
+            "lon": 14.4194829
+        }
+    }, 
+    {
+        "start": "2012-10-17 16:38:33", 
+        "title": "Internet", 
+        "end": "2012-10-17 16:38:34", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 16:38:33", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.082309, 
+            "lon": 14.4194829
+        }
+    }, 
+    {
+        "start": "2012-10-17 17:05:15", 
+        "title": "Internet", 
+        "end": "2012-10-17 17:05:16", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 17:05:15", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.082309, 
+            "lon": 14.4194829
+        }
+    }, 
+    {
+        "start": "2012-10-17 17:06:34", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-17 17:06:35", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 17:06:34", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.089039, 
+            "lon": 14.4069951
+        }
+    }, 
+    {
+        "start": "2012-10-17 17:23:48", 
+        "title": "Internet", 
+        "end": "2012-10-17 17:23:49", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 17:23:48", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0880938, 
+            "lon": 14.4142956
+        }
+    }, 
+    {
+        "start": "2012-10-17 17:31:03", 
+        "title": "Internet", 
+        "end": "2012-10-17 17:31:04", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 17:31:03", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0880938, 
+            "lon": 14.4142956
+        }
+    }, 
+    {
+        "start": "2012-10-17 17:56:50", 
+        "title": "Internet", 
+        "end": "2012-10-17 17:56:51", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 17:56:50", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0883026, 
+            "lon": 14.4178067
+        }
+    }, 
+    {
+        "start": "2012-10-17 17:57:12", 
+        "title": "Internet", 
+        "end": "2012-10-17 17:57:13", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 17:57:12", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0755381, 
+            "lon": 14.4378005
+        }
+    }, 
+    {
+        "start": "2012-10-17 18:00:51", 
+        "title": "Internet", 
+        "end": "2012-10-17 18:00:52", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 18:00:51", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0755381, 
+            "lon": 14.4378005
+        }
+    }, 
+    {
+        "start": "2012-10-17 18:08:49", 
+        "title": "Internet", 
+        "end": "2012-10-17 18:08:50", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 18:08:49", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0755381, 
+            "lon": 14.4378005
+        }
+    }, 
+    {
+        "start": "2012-10-17 18:36:51", 
+        "title": "Internet", 
+        "end": "2012-10-17 18:36:52", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 18:36:51", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0486965, 
+            "lon": 14.342288
+        }
+    }, 
+    {
+        "start": "2012-10-17 19:36:51", 
+        "title": "Internet", 
+        "end": "2012-10-17 19:36:52", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 19:36:51", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0486965, 
+            "lon": 14.342288
+        }
+    }, 
+    {
+        "start": "2012-10-17 20:10:32", 
+        "title": "Internet", 
+        "end": "2012-10-17 20:10:33", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 20:10:32", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0486965, 
+            "lon": 14.342288
+        }
+    }, 
+    {
+        "start": "2012-10-17 20:10:52", 
+        "title": "Internet", 
+        "end": "2012-10-17 20:10:53", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 20:10:52", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0486965, 
+            "lon": 14.342288
+        }
+    }, 
+    {
+        "start": "2012-10-17 20:39:36", 
+        "title": "Příchozí hovor", 
+        "end": "2012-10-17 20:39:37", 
+        "options": {
+            "theme": "red", 
+            "description": "Příchozí hovor v 20:39:36", 
+            "tags": "['Příchozí hovor']"
+        }, 
+        "point": {
+            "lat": 50.0486965, 
+            "lon": 14.342288
+        }
+    }, 
+    {
+        "start": "2012-10-17 20:40:37", 
+        "title": "Internet", 
+        "end": "2012-10-17 20:40:38", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 20:40:37", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0755381, 
+            "lon": 14.4378005
+        }
+    }, 
+    {
+        "start": "2012-10-17 21:01:47", 
+        "title": "Internet", 
+        "end": "2012-10-17 21:01:48", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 21:01:47", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0755381, 
+            "lon": 14.4378005
+        }
+    }, 
+    {
+        "start": "2012-10-17 21:06:07", 
+        "title": "Internet", 
+        "end": "2012-10-17 21:06:08", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 21:06:07", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1080117, 
+            "lon": 14.499567
+        }
+    }, 
+    {
+        "start": "2012-10-17 21:22:52", 
+        "title": "Internet", 
+        "end": "2012-10-17 21:22:53", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 21:22:52", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-17 21:27:04", 
+        "title": "Internet", 
+        "end": "2012-10-17 21:27:05", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 21:27:04", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-17 21:30:48", 
+        "title": "Internet", 
+        "end": "2012-10-17 21:30:49", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 21:30:48", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-17 21:31:53", 
+        "title": "Internet", 
+        "end": "2012-10-17 21:31:54", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 21:31:53", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-17 21:34:58", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-17 21:34:59", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 21:34:58", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-17 21:35:01", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-17 21:35:02", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 21:35:01", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-17 22:02:34", 
+        "title": "Internet", 
+        "end": "2012-10-17 22:02:35", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 22:02:34", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-17 22:05:24", 
+        "title": "Internet", 
+        "end": "2012-10-17 22:05:25", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 22:05:24", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-17 22:06:08", 
+        "title": "Internet", 
+        "end": "2012-10-17 22:06:09", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 22:06:08", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-17 22:08:31", 
+        "title": "Internet", 
+        "end": "2012-10-17 22:08:32", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 22:08:31", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1172144, 
+            "lon": 14.5095481
+        }
+    }, 
+    {
+        "start": "2012-10-17 22:12:43", 
+        "title": "Internet", 
+        "end": "2012-10-17 22:12:44", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 22:12:43", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1172144, 
+            "lon": 14.5095481
+        }
+    }, 
+    {
+        "start": "2012-10-17 22:29:09", 
+        "title": "Internet", 
+        "end": "2012-10-17 22:29:10", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 22:29:09", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-17 22:40:32", 
+        "title": "Internet", 
+        "end": "2012-10-17 22:40:33", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 22:40:32", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-17 22:44:38", 
+        "title": "Internet", 
+        "end": "2012-10-17 22:44:39", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 22:44:38", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-17 22:59:04", 
+        "title": "Internet", 
+        "end": "2012-10-17 22:59:05", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 22:59:04", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-17 23:00:11", 
+        "title": "Internet", 
+        "end": "2012-10-17 23:00:12", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 23:00:11", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-17 23:18:12", 
+        "title": "Internet", 
+        "end": "2012-10-17 23:18:13", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 23:18:12", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-17 23:18:43", 
+        "title": "Internet", 
+        "end": "2012-10-17 23:18:44", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 23:18:43", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-17 23:35:35", 
+        "title": "Internet", 
+        "end": "2012-10-17 23:35:36", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 23:35:35", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-17 23:44:48", 
+        "title": "Internet", 
+        "end": "2012-10-17 23:44:49", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 23:44:48", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-17 23:47:15", 
+        "title": "Internet", 
+        "end": "2012-10-17 23:47:16", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 23:47:15", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-17 23:47:15", 
+        "title": "Internet", 
+        "end": "2012-10-17 23:47:16", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 23:47:15", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-18 00:04:59", 
+        "title": "Internet", 
+        "end": "2012-10-18 00:05:00", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 00:04:59", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-18 00:15:03", 
+        "title": "Internet", 
+        "end": "2012-10-18 00:15:04", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 00:15:03", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-18 00:40:46", 
+        "title": "Internet", 
+        "end": "2012-10-18 00:40:47", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 00:40:46", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-18 00:41:14", 
+        "title": "Internet", 
+        "end": "2012-10-18 00:41:15", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 00:41:14", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-18 01:10:13", 
+        "title": "Internet", 
+        "end": "2012-10-18 01:10:14", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 01:10:13", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1172144, 
+            "lon": 14.5095481
+        }
+    }, 
+    {
+        "start": "2012-10-18 01:17:22", 
+        "title": "Internet", 
+        "end": "2012-10-18 01:17:23", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 01:17:22", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-18 01:46:39", 
+        "title": "Internet", 
+        "end": "2012-10-18 01:46:40", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 01:46:39", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-18 01:58:38", 
+        "title": "Internet", 
+        "end": "2012-10-18 01:58:39", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 01:58:38", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-18 02:58:38", 
+        "title": "Internet", 
+        "end": "2012-10-18 02:58:39", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 02:58:38", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-18 03:09:18", 
+        "title": "Internet", 
+        "end": "2012-10-18 03:09:19", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 03:09:18", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-18 04:09:18", 
+        "title": "Internet", 
+        "end": "2012-10-18 04:09:19", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 04:09:18", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-18 05:09:18", 
+        "title": "Internet", 
+        "end": "2012-10-18 05:09:19", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 05:09:18", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-18 05:27:25", 
+        "title": "Internet", 
+        "end": "2012-10-18 05:27:26", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 05:27:25", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-18 05:31:20", 
+        "title": "Internet", 
+        "end": "2012-10-18 05:31:21", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 05:31:20", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-18 05:48:03", 
+        "title": "Internet", 
+        "end": "2012-10-18 05:48:04", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 05:48:03", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-18 05:52:01", 
+        "title": "Internet", 
+        "end": "2012-10-18 05:52:02", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 05:52:01", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-18 06:07:39", 
+        "title": "Internet", 
+        "end": "2012-10-18 06:07:40", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 06:07:39", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-18 06:09:19", 
+        "title": "Internet", 
+        "end": "2012-10-18 06:09:20", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 06:09:19", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-18 06:13:06", 
+        "title": "Internet", 
+        "end": "2012-10-18 06:13:07", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 06:13:06", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-18 06:25:56", 
+        "title": "Internet", 
+        "end": "2012-10-18 06:25:57", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 06:25:56", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-18 06:31:51", 
+        "title": "Internet", 
+        "end": "2012-10-18 06:31:52", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 06:31:51", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-18 06:42:22", 
+        "title": "Internet", 
+        "end": "2012-10-18 06:42:23", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 06:42:22", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-18 06:53:00", 
+        "title": "Internet", 
+        "end": "2012-10-18 06:53:01", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 06:53:00", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-18 07:02:37", 
+        "title": "Internet", 
+        "end": "2012-10-18 07:02:38", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 07:02:37", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-18 07:03:03", 
+        "title": "Internet", 
+        "end": "2012-10-18 07:03:04", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 07:03:03", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-18 07:07:24", 
+        "title": "Internet", 
+        "end": "2012-10-18 07:07:25", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 07:07:24", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-18 07:08:00", 
+        "title": "Internet", 
+        "end": "2012-10-18 07:08:01", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 07:08:00", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-18 07:08:57", 
+        "title": "Internet", 
+        "end": "2012-10-18 07:08:58", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 07:08:57", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-18 07:09:32", 
+        "title": "Internet", 
+        "end": "2012-10-18 07:09:33", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 07:09:32", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-18 07:13:06", 
+        "title": "Internet", 
+        "end": "2012-10-18 07:13:07", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 07:13:06", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-18 07:23:52", 
+        "title": "Internet", 
+        "end": "2012-10-18 07:23:53", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 07:23:52", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-18 07:31:18", 
+        "title": "Internet", 
+        "end": "2012-10-18 07:31:19", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 07:31:18", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-18 07:50:47", 
+        "title": "Internet", 
+        "end": "2012-10-18 07:50:48", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 07:50:47", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-18 07:54:13", 
+        "title": "Internet", 
+        "end": "2012-10-18 07:54:14", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 07:54:13", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-18 07:54:23", 
+        "title": "Internet", 
+        "end": "2012-10-18 07:54:24", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 07:54:23", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-18 08:54:23", 
+        "title": "Internet", 
+        "end": "2012-10-18 08:54:24", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 08:54:23", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-18 09:36:28", 
+        "title": "Příchozí hovor", 
+        "end": "2012-10-18 09:36:29", 
+        "options": {
+            "theme": "red", 
+            "description": "Příchozí hovor v 09:36:28", 
+            "tags": "['Příchozí hovor']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-18 09:48:58", 
+        "title": "Internet", 
+        "end": "2012-10-18 09:48:59", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 09:48:58", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-18 09:49:48", 
+        "title": "Internet", 
+        "end": "2012-10-18 09:49:49", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 09:49:48", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1145033, 
+            "lon": 14.48928
+        }
+    }, 
+    {
+        "start": "2012-10-18 09:54:27", 
+        "title": "Internet", 
+        "end": "2012-10-18 09:54:28", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 09:54:27", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0755381, 
+            "lon": 14.4378005
+        }
+    }, 
+    {
+        "start": "2012-10-18 10:13:50", 
+        "title": "Internet", 
+        "end": "2012-10-18 10:13:51", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 10:13:50", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0811995, 
+            "lon": 14.4285572
+        }
+    }, 
+    {
+        "start": "2012-10-18 11:13:50", 
+        "title": "Internet", 
+        "end": "2012-10-18 11:13:51", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 11:13:50", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0825418, 
+            "lon": 14.431958
+        }
+    }, 
+    {
+        "start": "2012-10-18 12:13:50", 
+        "title": "Internet", 
+        "end": "2012-10-18 12:13:51", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 12:13:50", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0825418, 
+            "lon": 14.431958
+        }
+    }, 
+    {
+        "start": "2012-10-18 12:30:18", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-18 12:30:19", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 12:30:18", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-18 12:32:42", 
+        "title": "Odchozí hovor", 
+        "end": "2012-10-18 12:32:43", 
+        "options": {
+            "theme": "red", 
+            "description": "Odchozí hovor v 12:32:42", 
+            "tags": "['Odchozí hovor']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-18 12:51:57", 
+        "title": "Odchozí hovor", 
+        "end": "2012-10-18 12:51:58", 
+        "options": {
+            "theme": "red", 
+            "description": "Odchozí hovor v 12:51:57", 
+            "tags": "['Odchozí hovor']"
+        }, 
+        "point": {
+            "lat": 50.082309, 
+            "lon": 14.4194829
+        }
+    }, 
+    {
+        "start": "2012-10-18 13:13:50", 
+        "title": "Internet", 
+        "end": "2012-10-18 13:13:51", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 13:13:50", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0825418, 
+            "lon": 14.431958
+        }
+    }, 
+    {
+        "start": "2012-10-18 14:13:50", 
+        "title": "Internet", 
+        "end": "2012-10-18 14:13:51", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 14:13:50", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0825418, 
+            "lon": 14.431958
+        }
+    }, 
+    {
+        "start": "2012-10-18 15:13:50", 
+        "title": "Internet", 
+        "end": "2012-10-18 15:13:51", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 15:13:50", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0825418, 
+            "lon": 14.431958
+        }
+    }, 
+    {
+        "start": "2012-10-18 15:16:11", 
+        "title": "Příchozí hovor", 
+        "end": "2012-10-18 15:16:12", 
+        "options": {
+            "theme": "red", 
+            "description": "Příchozí hovor v 15:16:11", 
+            "tags": "['Příchozí hovor']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-18 16:13:50", 
+        "title": "Internet", 
+        "end": "2012-10-18 16:13:51", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 16:13:50", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-18 16:26:00", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-18 16:26:01", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 16:26:00", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.082309, 
+            "lon": 14.4194829
+        }
+    }, 
+    {
+        "start": "2012-10-18 16:28:41", 
+        "title": "Odchozí SMS", 
+        "end": "2012-10-18 16:28:42", 
+        "options": {
+            "theme": "green", 
+            "description": "Odchozí SMS v 16:28:41", 
+            "tags": "['Odchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0768044, 
+            "lon": 14.4191229
+        }
+    }, 
+    {
+        "start": "2012-10-18 17:13:50", 
+        "title": "Internet", 
+        "end": "2012-10-18 17:13:51", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 17:13:50", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.082309, 
+            "lon": 14.4194829
+        }
+    }, 
+    {
+        "start": "2012-10-18 17:38:48", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-18 17:38:49", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 17:38:48", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0753404, 
+            "lon": 14.4288796
+        }
+    }, 
+    {
+        "start": "2012-10-18 18:01:18", 
+        "title": "Odchozí SMS", 
+        "end": "2012-10-18 18:01:19", 
+        "options": {
+            "theme": "green", 
+            "description": "Odchozí SMS v 18:01:18", 
+            "tags": "['Odchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0772449, 
+            "lon": 14.428861
+        }
+    }, 
+    {
+        "start": "2012-10-18 18:10:35", 
+        "title": "Příchozí hovor", 
+        "end": "2012-10-18 18:10:36", 
+        "options": {
+            "theme": "red", 
+            "description": "Příchozí hovor v 18:10:35", 
+            "tags": "['Příchozí hovor']"
+        }, 
+        "point": {
+            "lat": 50.0753404, 
+            "lon": 14.4288796
+        }
+    }, 
+    {
+        "start": "2012-10-18 18:13:50", 
+        "title": "Internet", 
+        "end": "2012-10-18 18:13:51", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 18:13:50", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.082309, 
+            "lon": 14.4194829
+        }
+    }, 
+    {
+        "start": "2012-10-18 18:38:44", 
+        "title": "Příchozí hovor", 
+        "end": "2012-10-18 18:38:45", 
+        "options": {
+            "theme": "red", 
+            "description": "Příchozí hovor v 18:38:44", 
+            "tags": "['Příchozí hovor']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-18 18:54:01", 
+        "title": "Odchozí SMS", 
+        "end": "2012-10-18 18:54:02", 
+        "options": {
+            "theme": "green", 
+            "description": "Odchozí SMS v 18:54:01", 
+            "tags": "['Odchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-18 18:54:31", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-18 18:54:32", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 18:54:31", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-18 19:01:04", 
+        "title": "Internet", 
+        "end": "2012-10-18 19:01:05", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 19:01:04", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.082309, 
+            "lon": 14.4194829
+        }
+    }, 
+    {
+        "start": "2012-10-18 19:04:57", 
+        "title": "Internet", 
+        "end": "2012-10-18 19:04:58", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 19:04:57", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0755381, 
+            "lon": 14.4378005
+        }
+    }, 
+    {
+        "start": "2012-10-18 19:07:10", 
+        "title": "Internet", 
+        "end": "2012-10-18 19:07:11", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 19:07:10", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0755381, 
+            "lon": 14.4378005
+        }
+    }, 
+    {
+        "start": "2012-10-18 19:10:03", 
+        "title": "Internet", 
+        "end": "2012-10-18 19:10:04", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 19:10:03", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0725329, 
+            "lon": 14.4036499
+        }
+    }, 
+    {
+        "start": "2012-10-18 19:17:42", 
+        "title": "Internet", 
+        "end": "2012-10-18 19:17:43", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 19:17:42", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0725329, 
+            "lon": 14.4036499
+        }
+    }, 
+    {
+        "start": "2012-10-18 20:18:41", 
+        "title": "Internet", 
+        "end": "2012-10-18 20:18:42", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 20:18:41", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0699533, 
+            "lon": 14.4086621
+        }
+    }, 
+    {
+        "start": "2012-10-18 20:47:21", 
+        "title": "Internet", 
+        "end": "2012-10-18 20:47:22", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 20:47:21", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0699533, 
+            "lon": 14.4086621
+        }
+    }, 
+    {
+        "start": "2012-10-18 20:47:23", 
+        "title": "Internet", 
+        "end": "2012-10-18 20:47:24", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 20:47:23", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0699533, 
+            "lon": 14.4086621
+        }
+    }, 
+    {
+        "start": "2012-10-18 20:48:01", 
+        "title": "Internet", 
+        "end": "2012-10-18 20:48:02", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 20:48:01", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0699533, 
+            "lon": 14.4086621
+        }
+    }, 
+    {
+        "start": "2012-10-18 20:48:13", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-18 20:48:14", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 20:48:13", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0699533, 
+            "lon": 14.4086621
+        }
+    }, 
+    {
+        "start": "2012-10-18 20:49:19", 
+        "title": "Odchozí SMS", 
+        "end": "2012-10-18 20:49:20", 
+        "options": {
+            "theme": "green", 
+            "description": "Odchozí SMS v 20:49:19", 
+            "tags": "['Odchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0699533, 
+            "lon": 14.4086621
+        }
+    }, 
+    {
+        "start": "2012-10-18 20:49:43", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-18 20:49:44", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 20:49:43", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0699533, 
+            "lon": 14.4086621
+        }
+    }, 
+    {
+        "start": "2012-10-18 21:29:39", 
+        "title": "Odchozí SMS", 
+        "end": "2012-10-18 21:29:40", 
+        "options": {
+            "theme": "green", 
+            "description": "Odchozí SMS v 21:29:39", 
+            "tags": "['Odchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0699533, 
+            "lon": 14.4086621
+        }
+    }, 
+    {
+        "start": "2012-10-18 21:48:01", 
+        "title": "Internet", 
+        "end": "2012-10-18 21:48:02", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 21:48:01", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0699533, 
+            "lon": 14.4086621
+        }
+    }, 
+    {
+        "start": "2012-10-18 22:00:16", 
+        "title": "Internet", 
+        "end": "2012-10-18 22:00:17", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 22:00:16", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0699533, 
+            "lon": 14.4086621
+        }
+    }, 
+    {
+        "start": "2012-10-18 22:01:46", 
+        "title": "Internet", 
+        "end": "2012-10-18 22:01:47", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 22:01:46", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0699533, 
+            "lon": 14.4086621
+        }
+    }, 
+    {
+        "start": "2012-10-18 22:05:48", 
+        "title": "Internet", 
+        "end": "2012-10-18 22:05:49", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 22:05:48", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0699533, 
+            "lon": 14.4086621
+        }
+    }, 
+    {
+        "start": "2012-10-18 22:39:22", 
+        "title": "Internet", 
+        "end": "2012-10-18 22:39:23", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 22:39:22", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0699533, 
+            "lon": 14.4086621
+        }
+    }, 
+    {
+        "start": "2012-10-18 22:49:09", 
+        "title": "Internet", 
+        "end": "2012-10-18 22:49:10", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 22:49:09", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0699533, 
+            "lon": 14.4086621
+        }
+    }, 
+    {
+        "start": "2012-10-18 23:02:17", 
+        "title": "Internet", 
+        "end": "2012-10-18 23:02:18", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 23:02:17", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0699533, 
+            "lon": 14.4086621
+        }
+    }, 
+    {
+        "start": "2012-10-18 23:21:26", 
+        "title": "Internet", 
+        "end": "2012-10-18 23:21:27", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 23:21:26", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0699533, 
+            "lon": 14.4086621
+        }
+    }, 
+    {
+        "start": "2012-10-18 23:25:33", 
+        "title": "Internet", 
+        "end": "2012-10-18 23:25:34", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 23:25:33", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0699533, 
+            "lon": 14.4086621
+        }
+    }, 
+    {
+        "start": "2012-10-18 23:35:47", 
+        "title": "Internet", 
+        "end": "2012-10-18 23:35:48", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 23:35:47", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0755381, 
+            "lon": 14.4378005
+        }
+    }, 
+    {
+        "start": "2012-10-18 23:43:05", 
+        "title": "Internet", 
+        "end": "2012-10-18 23:43:06", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 23:43:05", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0755381, 
+            "lon": 14.4378005
+        }
+    }, 
+    {
+        "start": "2012-10-18 23:44:59", 
+        "title": "Internet", 
+        "end": "2012-10-18 23:45:00", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 23:44:59", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0890997, 
+            "lon": 14.4277074
+        }
+    }, 
+    {
+        "start": "2012-10-18 23:44:59", 
+        "title": "Internet", 
+        "end": "2012-10-18 23:45:00", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 23:44:59", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0890997, 
+            "lon": 14.4277074
+        }
+    }, 
+    {
+        "start": "2012-10-19 00:35:26", 
+        "title": "Internet", 
+        "end": "2012-10-19 00:35:27", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 00:35:26", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0939213, 
+            "lon": 14.3412069
+        }
+    }, 
+    {
+        "start": "2012-10-19 00:41:02", 
+        "title": "Internet", 
+        "end": "2012-10-19 00:41:03", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 00:41:02", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-19 01:41:02", 
+        "title": "Internet", 
+        "end": "2012-10-19 01:41:03", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 01:41:02", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-19 02:41:02", 
+        "title": "Internet", 
+        "end": "2012-10-19 02:41:03", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 02:41:02", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-19 03:41:02", 
+        "title": "Internet", 
+        "end": "2012-10-19 03:41:03", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 03:41:02", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-19 04:41:02", 
+        "title": "Internet", 
+        "end": "2012-10-19 04:41:03", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 04:41:02", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-19 05:41:02", 
+        "title": "Internet", 
+        "end": "2012-10-19 05:41:03", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 05:41:02", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-19 06:41:02", 
+        "title": "Internet", 
+        "end": "2012-10-19 06:41:03", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 06:41:02", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-19 07:20:31", 
+        "title": "Internet", 
+        "end": "2012-10-19 07:20:32", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 07:20:31", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0939213, 
+            "lon": 14.3412069
+        }
+    }, 
+    {
+        "start": "2012-10-19 07:31:57", 
+        "title": "Internet", 
+        "end": "2012-10-19 07:31:58", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 07:31:57", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-19 08:10:50", 
+        "title": "Internet", 
+        "end": "2012-10-19 08:10:51", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 08:10:50", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0939213, 
+            "lon": 14.3412069
+        }
+    }, 
+    {
+        "start": "2012-10-19 08:12:12", 
+        "title": "Internet", 
+        "end": "2012-10-19 08:12:13", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 08:12:12", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-19 08:33:35", 
+        "title": "Internet", 
+        "end": "2012-10-19 08:33:36", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 08:33:35", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0755381, 
+            "lon": 14.4378005
+        }
+    }, 
+    {
+        "start": "2012-10-19 08:34:53", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-19 08:34:54", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 08:34:53", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0755381, 
+            "lon": 14.4378005
+        }
+    }, 
+    {
+        "start": "2012-10-19 08:34:58", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-19 08:34:59", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 08:34:58", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0755381, 
+            "lon": 14.4378005
+        }
+    }, 
+    {
+        "start": "2012-10-19 08:56:14", 
+        "title": "Internet", 
+        "end": "2012-10-19 08:56:15", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 08:56:14", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0461146, 
+            "lon": 14.448643
+        }
+    }, 
+    {
+        "start": "2012-10-19 08:56:50", 
+        "title": "Internet", 
+        "end": "2012-10-19 08:56:51", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 08:56:50", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0461146, 
+            "lon": 14.448643
+        }
+    }, 
+    {
+        "start": "2012-10-19 08:57:27", 
+        "title": "Příchozí hovor", 
+        "end": "2012-10-19 08:57:28", 
+        "options": {
+            "theme": "red", 
+            "description": "Příchozí hovor v 08:57:27", 
+            "tags": "['Příchozí hovor']"
+        }, 
+        "point": {
+            "lat": 50.0461146, 
+            "lon": 14.448643
+        }
+    }, 
+    {
+        "start": "2012-10-19 08:59:31", 
+        "title": "Příchozí hovor", 
+        "end": "2012-10-19 08:59:32", 
+        "options": {
+            "theme": "red", 
+            "description": "Příchozí hovor v 08:59:31", 
+            "tags": "['Příchozí hovor']"
+        }, 
+        "point": {
+            "lat": 50.0485365, 
+            "lon": 14.4495515
+        }
+    }, 
+    {
+        "start": "2012-10-19 09:09:50", 
+        "title": "Internet", 
+        "end": "2012-10-19 09:09:51", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 09:09:50", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0461146, 
+            "lon": 14.448643
+        }
+    }, 
+    {
+        "start": "2012-10-19 09:10:09", 
+        "title": "Internet", 
+        "end": "2012-10-19 09:10:10", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 09:10:09", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0441608, 
+            "lon": 14.4438064
+        }
+    }, 
+    {
+        "start": "2012-10-19 09:17:29", 
+        "title": "Internet", 
+        "end": "2012-10-19 09:17:30", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 09:17:29", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0441608, 
+            "lon": 14.4438064
+        }
+    }, 
+    {
+        "start": "2012-10-19 09:18:48", 
+        "title": "Internet", 
+        "end": "2012-10-19 09:18:49", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 09:18:48", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0441608, 
+            "lon": 14.4438064
+        }
+    }, 
+    {
+        "start": "2012-10-19 09:23:56", 
+        "title": "Internet", 
+        "end": "2012-10-19 09:23:57", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 09:23:56", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0441608, 
+            "lon": 14.4438064
+        }
+    }, 
+    {
+        "start": "2012-10-19 09:28:35", 
+        "title": "Internet", 
+        "end": "2012-10-19 09:28:36", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 09:28:35", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0441608, 
+            "lon": 14.4438064
+        }
+    }, 
+    {
+        "start": "2012-10-19 09:53:23", 
+        "title": "Internet", 
+        "end": "2012-10-19 09:53:24", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 09:53:23", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0441608, 
+            "lon": 14.4438064
+        }
+    }, 
+    {
+        "start": "2012-10-19 09:54:59", 
+        "title": "Internet", 
+        "end": "2012-10-19 09:55:00", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 09:54:59", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0441608, 
+            "lon": 14.4438064
+        }
+    }, 
+    {
+        "start": "2012-10-19 10:02:33", 
+        "title": "Internet", 
+        "end": "2012-10-19 10:02:34", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 10:02:33", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0486294, 
+            "lon": 14.4408091
+        }
+    }, 
+    {
+        "start": "2012-10-19 10:03:10", 
+        "title": "Internet", 
+        "end": "2012-10-19 10:03:11", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 10:03:10", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0486294, 
+            "lon": 14.4408091
+        }
+    }, 
+    {
+        "start": "2012-10-19 10:07:39", 
+        "title": "Internet", 
+        "end": "2012-10-19 10:07:40", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 10:07:39", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0486294, 
+            "lon": 14.4408091
+        }
+    }, 
+    {
+        "start": "2012-10-19 10:14:02", 
+        "title": "Internet", 
+        "end": "2012-10-19 10:14:03", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 10:14:02", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0441608, 
+            "lon": 14.4438064
+        }
+    }, 
+    {
+        "start": "2012-10-19 10:26:39", 
+        "title": "Internet", 
+        "end": "2012-10-19 10:26:40", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 10:26:39", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0441608, 
+            "lon": 14.4438064
+        }
+    }, 
+    {
+        "start": "2012-10-19 10:28:50", 
+        "title": "Internet", 
+        "end": "2012-10-19 10:28:51", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 10:28:50", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0441608, 
+            "lon": 14.4438064
+        }
+    }, 
+    {
+        "start": "2012-10-19 11:28:50", 
+        "title": "Internet", 
+        "end": "2012-10-19 11:28:51", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 11:28:50", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0486294, 
+            "lon": 14.4408091
+        }
+    }, 
+    {
+        "start": "2012-10-19 11:38:42", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-19 11:38:43", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 11:38:42", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0441608, 
+            "lon": 14.4438064
+        }
+    }, 
+    {
+        "start": "2012-10-19 11:41:51", 
+        "title": "Odchozí SMS", 
+        "end": "2012-10-19 11:41:52", 
+        "options": {
+            "theme": "green", 
+            "description": "Odchozí SMS v 11:41:51", 
+            "tags": "['Odchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0441608, 
+            "lon": 14.4438064
+        }
+    }, 
+    {
+        "start": "2012-10-19 12:01:06", 
+        "title": "Internet", 
+        "end": "2012-10-19 12:01:07", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 12:01:06", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0486294, 
+            "lon": 14.4408091
+        }
+    }, 
+    {
+        "start": "2012-10-19 12:01:38", 
+        "title": "Odchozí SMS", 
+        "end": "2012-10-19 12:01:39", 
+        "options": {
+            "theme": "green", 
+            "description": "Odchozí SMS v 12:01:38", 
+            "tags": "['Odchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0486294, 
+            "lon": 14.4408091
+        }
+    }, 
+    {
+        "start": "2012-10-19 12:05:28", 
+        "title": "Internet", 
+        "end": "2012-10-19 12:05:29", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 12:05:28", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0441608, 
+            "lon": 14.4438064
+        }
+    }, 
+    {
+        "start": "2012-10-19 13:01:34", 
+        "title": "Internet", 
+        "end": "2012-10-19 13:01:35", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 13:01:34", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0441608, 
+            "lon": 14.4438064
+        }
+    }, 
+    {
+        "start": "2012-10-19 13:02:10", 
+        "title": "Internet", 
+        "end": "2012-10-19 13:02:11", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 13:02:10", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0441608, 
+            "lon": 14.4438064
+        }
+    }, 
+    {
+        "start": "2012-10-19 13:02:45", 
+        "title": "Internet", 
+        "end": "2012-10-19 13:02:46", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 13:02:45", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0441608, 
+            "lon": 14.4438064
+        }
+    }, 
+    {
+        "start": "2012-10-19 13:19:59", 
+        "title": "Internet", 
+        "end": "2012-10-19 13:20:00", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 13:19:59", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0441608, 
+            "lon": 14.4438064
+        }
+    }, 
+    {
+        "start": "2012-10-19 13:55:17", 
+        "title": "Internet", 
+        "end": "2012-10-19 13:55:18", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 13:55:17", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0441608, 
+            "lon": 14.4438064
+        }
+    }, 
+    {
+        "start": "2012-10-19 13:56:02", 
+        "title": "Internet", 
+        "end": "2012-10-19 13:56:03", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 13:56:02", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0441608, 
+            "lon": 14.4438064
+        }
+    }, 
+    {
+        "start": "2012-10-19 13:57:58", 
+        "title": "Internet", 
+        "end": "2012-10-19 13:57:59", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 13:57:58", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0441608, 
+            "lon": 14.4438064
+        }
+    }, 
+    {
+        "start": "2012-10-19 13:58:25", 
+        "title": "Internet", 
+        "end": "2012-10-19 13:58:26", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 13:58:25", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0441608, 
+            "lon": 14.4438064
+        }
+    }, 
+    {
+        "start": "2012-10-19 14:09:13", 
+        "title": "Internet", 
+        "end": "2012-10-19 14:09:14", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 14:09:13", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0441608, 
+            "lon": 14.4438064
+        }
+    }, 
+    {
+        "start": "2012-10-19 14:14:37", 
+        "title": "Internet", 
+        "end": "2012-10-19 14:14:38", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 14:14:37", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0441608, 
+            "lon": 14.4438064
+        }
+    }, 
+    {
+        "start": "2012-10-19 14:15:12", 
+        "title": "Internet", 
+        "end": "2012-10-19 14:15:13", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 14:15:12", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0441608, 
+            "lon": 14.4438064
+        }
+    }, 
+    {
+        "start": "2012-10-19 14:18:36", 
+        "title": "Internet", 
+        "end": "2012-10-19 14:18:37", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 14:18:36", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0441608, 
+            "lon": 14.4438064
+        }
+    }, 
+    {
+        "start": "2012-10-19 14:22:58", 
+        "title": "Internet", 
+        "end": "2012-10-19 14:22:59", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 14:22:58", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0441608, 
+            "lon": 14.4438064
+        }
+    }, 
+    {
+        "start": "2012-10-19 14:29:08", 
+        "title": "Internet", 
+        "end": "2012-10-19 14:29:09", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 14:29:08", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0441608, 
+            "lon": 14.4438064
+        }
+    }, 
+    {
+        "start": "2012-10-19 14:45:04", 
+        "title": "Internet", 
+        "end": "2012-10-19 14:45:05", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 14:45:04", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0486294, 
+            "lon": 14.4408091
+        }
+    }, 
+    {
+        "start": "2012-10-19 14:48:37", 
+        "title": "Internet", 
+        "end": "2012-10-19 14:48:38", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 14:48:37", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0441608, 
+            "lon": 14.4438064
+        }
+    }, 
+    {
+        "start": "2012-10-19 15:02:05", 
+        "title": "Internet", 
+        "end": "2012-10-19 15:02:06", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 15:02:05", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0441608, 
+            "lon": 14.4438064
+        }
+    }, 
+    {
+        "start": "2012-10-19 15:02:27", 
+        "title": "Internet", 
+        "end": "2012-10-19 15:02:28", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 15:02:27", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0441608, 
+            "lon": 14.4438064
+        }
+    }, 
+    {
+        "start": "2012-10-19 16:02:27", 
+        "title": "Internet", 
+        "end": "2012-10-19 16:02:28", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 16:02:27", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0441608, 
+            "lon": 14.4438064
+        }
+    }, 
+    {
+        "start": "2012-10-19 16:13:17", 
+        "title": "Internet", 
+        "end": "2012-10-19 16:13:18", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 16:13:17", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0755381, 
+            "lon": 14.4378005
+        }
+    }, 
+    {
+        "start": "2012-10-19 16:23:16", 
+        "title": "Internet", 
+        "end": "2012-10-19 16:23:17", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 16:23:16", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0753404, 
+            "lon": 14.4288796
+        }
+    }, 
+    {
+        "start": "2012-10-19 16:34:36", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-19 16:34:37", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 16:34:36", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-19 16:35:28", 
+        "title": "Odchozí SMS", 
+        "end": "2012-10-19 16:35:29", 
+        "options": {
+            "theme": "green", 
+            "description": "Odchozí SMS v 16:35:28", 
+            "tags": "['Odchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-19 16:36:23", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-19 16:36:24", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 16:36:23", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-19 17:16:01", 
+        "title": "Odchozí SMS", 
+        "end": "2012-10-19 17:16:02", 
+        "options": {
+            "theme": "green", 
+            "description": "Odchozí SMS v 17:16:01", 
+            "tags": "['Odchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-19 17:23:16", 
+        "title": "Internet", 
+        "end": "2012-10-19 17:23:17", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 17:23:16", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-19 17:46:48", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-19 17:46:49", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 17:46:48", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-19 18:09:08", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-19 18:09:09", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 18:09:08", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-19 18:09:11", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-19 18:09:12", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 18:09:11", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-19 18:18:31", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-19 18:18:32", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 18:18:31", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-19 18:23:16", 
+        "title": "Internet", 
+        "end": "2012-10-19 18:23:17", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 18:23:16", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-19 18:40:40", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-19 18:40:41", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 18:40:40", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-19 19:23:16", 
+        "title": "Internet", 
+        "end": "2012-10-19 19:23:17", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 19:23:16", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-19 20:23:16", 
+        "title": "Internet", 
+        "end": "2012-10-19 20:23:17", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 20:23:16", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-19 21:22:22", 
+        "title": "Internet", 
+        "end": "2012-10-19 21:22:23", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 21:22:22", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0792132, 
+            "lon": 14.4215082
+        }
+    }, 
+    {
+        "start": "2012-10-19 21:37:52", 
+        "title": "Internet", 
+        "end": "2012-10-19 21:37:53", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 21:37:52", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0755381, 
+            "lon": 14.4378005
+        }
+    }, 
+    {
+        "start": "2012-10-19 21:39:43", 
+        "title": "Internet", 
+        "end": "2012-10-19 21:39:44", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 21:39:43", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0755381, 
+            "lon": 14.4378005
+        }
+    }, 
+    {
+        "start": "2012-10-19 21:43:11", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-19 21:43:12", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 21:43:11", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.1080117, 
+            "lon": 14.499567
+        }
+    }, 
+    {
+        "start": "2012-10-19 21:43:17", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-19 21:43:18", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 21:43:17", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.1080117, 
+            "lon": 14.499567
+        }
+    }, 
+    {
+        "start": "2012-10-19 21:43:45", 
+        "title": "Internet", 
+        "end": "2012-10-19 21:43:46", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 21:43:45", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1080117, 
+            "lon": 14.499567
+        }
+    }, 
+    {
+        "start": "2012-10-19 22:34:20", 
+        "title": "Internet", 
+        "end": "2012-10-19 22:34:21", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 22:34:20", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-19 22:39:18", 
+        "title": "Internet", 
+        "end": "2012-10-19 22:39:19", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 22:39:18", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-19 22:40:23", 
+        "title": "Internet", 
+        "end": "2012-10-19 22:40:24", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 22:40:23", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-19 23:05:29", 
+        "title": "Internet", 
+        "end": "2012-10-19 23:05:30", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 23:05:29", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-19 23:06:37", 
+        "title": "Internet", 
+        "end": "2012-10-19 23:06:38", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 23:06:37", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-19 23:11:07", 
+        "title": "Internet", 
+        "end": "2012-10-19 23:11:08", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 23:11:07", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-19 23:17:21", 
+        "title": "Internet", 
+        "end": "2012-10-19 23:17:22", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 23:17:21", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-19 23:22:56", 
+        "title": "Internet", 
+        "end": "2012-10-19 23:22:57", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 23:22:56", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-19 23:25:12", 
+        "title": "Internet", 
+        "end": "2012-10-19 23:25:13", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 23:25:12", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-19 23:39:43", 
+        "title": "Internet", 
+        "end": "2012-10-19 23:39:44", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 23:39:43", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-19 23:42:24", 
+        "title": "Internet", 
+        "end": "2012-10-19 23:42:25", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 23:42:24", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-19 23:42:24", 
+        "title": "Internet", 
+        "end": "2012-10-19 23:42:25", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 23:42:24", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-20 00:06:59", 
+        "title": "Internet", 
+        "end": "2012-10-20 00:07:00", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 00:06:59", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-20 00:11:38", 
+        "title": "Internet", 
+        "end": "2012-10-20 00:11:39", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 00:11:38", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-20 00:15:33", 
+        "title": "Internet", 
+        "end": "2012-10-20 00:15:34", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 00:15:33", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1172144, 
+            "lon": 14.5095481
+        }
+    }, 
+    {
+        "start": "2012-10-20 00:18:34", 
+        "title": "Internet", 
+        "end": "2012-10-20 00:18:35", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 00:18:34", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-20 00:18:56", 
+        "title": "Internet", 
+        "end": "2012-10-20 00:18:57", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 00:18:56", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-20 00:21:54", 
+        "title": "Internet", 
+        "end": "2012-10-20 00:21:55", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 00:21:54", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-20 00:22:35", 
+        "title": "Internet", 
+        "end": "2012-10-20 00:22:36", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 00:22:35", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-20 00:23:23", 
+        "title": "Internet", 
+        "end": "2012-10-20 00:23:24", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 00:23:23", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-20 00:27:01", 
+        "title": "Internet", 
+        "end": "2012-10-20 00:27:02", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 00:27:01", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-20 00:27:40", 
+        "title": "Internet", 
+        "end": "2012-10-20 00:27:41", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 00:27:40", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-20 00:31:08", 
+        "title": "Internet", 
+        "end": "2012-10-20 00:31:09", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 00:31:08", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1172144, 
+            "lon": 14.5095481
+        }
+    }, 
+    {
+        "start": "2012-10-20 00:32:34", 
+        "title": "Internet", 
+        "end": "2012-10-20 00:32:35", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 00:32:34", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-20 00:37:44", 
+        "title": "Internet", 
+        "end": "2012-10-20 00:37:45", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 00:37:44", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-20 00:53:11", 
+        "title": "Internet", 
+        "end": "2012-10-20 00:53:12", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 00:53:11", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-20 01:04:09", 
+        "title": "Internet", 
+        "end": "2012-10-20 01:04:10", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 01:04:09", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-20 01:37:05", 
+        "title": "Internet", 
+        "end": "2012-10-20 01:37:06", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 01:37:05", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-20 01:39:07", 
+        "title": "Internet", 
+        "end": "2012-10-20 01:39:08", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 01:39:07", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-20 01:50:30", 
+        "title": "Internet", 
+        "end": "2012-10-20 01:50:31", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 01:50:30", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-20 01:54:08", 
+        "title": "Internet", 
+        "end": "2012-10-20 01:54:09", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 01:54:08", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-20 02:54:08", 
+        "title": "Internet", 
+        "end": "2012-10-20 02:54:09", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 02:54:08", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-20 03:54:08", 
+        "title": "Internet", 
+        "end": "2012-10-20 03:54:09", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 03:54:08", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-20 04:54:08", 
+        "title": "Internet", 
+        "end": "2012-10-20 04:54:09", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 04:54:08", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-20 05:54:08", 
+        "title": "Internet", 
+        "end": "2012-10-20 05:54:09", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 05:54:08", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-20 06:38:29", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-20 06:38:30", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 06:38:29", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-20 06:54:08", 
+        "title": "Internet", 
+        "end": "2012-10-20 06:54:09", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 06:54:08", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-20 07:30:33", 
+        "title": "Odchozí SMS", 
+        "end": "2012-10-20 07:30:34", 
+        "options": {
+            "theme": "green", 
+            "description": "Odchozí SMS v 07:30:33", 
+            "tags": "['Odchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-20 07:42:40", 
+        "title": "Odchozí SMS", 
+        "end": "2012-10-20 07:42:41", 
+        "options": {
+            "theme": "green", 
+            "description": "Odchozí SMS v 07:42:40", 
+            "tags": "['Odchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-20 07:53:45", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-20 07:53:46", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 07:53:45", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-20 07:54:08", 
+        "title": "Internet", 
+        "end": "2012-10-20 07:54:09", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 07:54:08", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.1214208, 
+            "lon": 14.5035862
+        }
+    }, 
+    {
+        "start": "2012-10-20 08:09:44", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-20 08:09:45", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 08:09:44", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.1102918, 
+            "lon": 14.5015949
+        }
+    }, 
+    {
+        "start": "2012-10-20 08:09:57", 
+        "title": "Internet", 
+        "end": "2012-10-20 08:09:58", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 08:09:57", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0755381, 
+            "lon": 14.4378005
+        }
+    }, 
+    {
+        "start": "2012-10-20 08:19:24", 
+        "title": "Internet", 
+        "end": "2012-10-20 08:19:25", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 08:19:24", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0755381, 
+            "lon": 14.4378005
+        }
+    }, 
+    {
+        "start": "2012-10-20 08:34:35", 
+        "title": "Internet", 
+        "end": "2012-10-20 08:34:36", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 08:34:35", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0814203, 
+            "lon": 14.422498
+        }
+    }, 
+    {
+        "start": "2012-10-20 08:36:57", 
+        "title": "Odchozí SMS", 
+        "end": "2012-10-20 08:36:58", 
+        "options": {
+            "theme": "green", 
+            "description": "Odchozí SMS v 08:36:57", 
+            "tags": "['Odchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0840847, 
+            "lon": 14.4227067
+        }
+    }, 
+    {
+        "start": "2012-10-20 08:39:34", 
+        "title": "Internet", 
+        "end": "2012-10-20 08:39:35", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 08:39:34", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0830704, 
+            "lon": 14.4245036
+        }
+    }, 
+    {
+        "start": "2012-10-20 08:42:43", 
+        "title": "Internet", 
+        "end": "2012-10-20 08:42:44", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 08:42:43", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0840847, 
+            "lon": 14.4227067
+        }
+    }, 
+    {
+        "start": "2012-10-20 09:04:08", 
+        "title": "Internet", 
+        "end": "2012-10-20 09:04:09", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 09:04:08", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0830704, 
+            "lon": 14.4245036
+        }
+    }, 
+    {
+        "start": "2012-10-20 09:04:50", 
+        "title": "Internet", 
+        "end": "2012-10-20 09:04:51", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 09:04:50", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0840847, 
+            "lon": 14.4227067
+        }
+    }, 
+    {
+        "start": "2012-10-20 09:23:23", 
+        "title": "Internet", 
+        "end": "2012-10-20 09:23:24", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 09:23:23", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0840847, 
+            "lon": 14.4227067
+        }
+    }, 
+    {
+        "start": "2012-10-20 09:24:25", 
+        "title": "Internet", 
+        "end": "2012-10-20 09:24:26", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 09:24:25", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0840847, 
+            "lon": 14.4227067
+        }
+    }, 
+    {
+        "start": "2012-10-20 09:25:44", 
+        "title": "Internet", 
+        "end": "2012-10-20 09:25:45", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 09:25:44", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0840847, 
+            "lon": 14.4227067
+        }
+    }, 
+    {
+        "start": "2012-10-20 09:32:30", 
+        "title": "Internet", 
+        "end": "2012-10-20 09:32:31", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 09:32:30", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0840847, 
+            "lon": 14.4227067
+        }
+    }, 
+    {
+        "start": "2012-10-20 09:43:26", 
+        "title": "Internet", 
+        "end": "2012-10-20 09:43:27", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 09:43:26", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0830704, 
+            "lon": 14.4245036
+        }
+    }, 
+    {
+        "start": "2012-10-20 09:43:51", 
+        "title": "Internet", 
+        "end": "2012-10-20 09:43:52", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 09:43:51", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0840847, 
+            "lon": 14.4227067
+        }
+    }, 
+    {
+        "start": "2012-10-20 09:48:22", 
+        "title": "Internet", 
+        "end": "2012-10-20 09:48:23", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 09:48:22", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0755381, 
+            "lon": 14.4378005
+        }
+    }, 
+    {
+        "start": "2012-10-20 09:56:41", 
+        "title": "Internet", 
+        "end": "2012-10-20 09:56:42", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 09:56:41", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0755381, 
+            "lon": 14.4378005
+        }
+    }, 
+    {
+        "start": "2012-10-20 10:03:04", 
+        "title": "Internet", 
+        "end": "2012-10-20 10:03:05", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 10:03:04", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0995098, 
+            "lon": 14.3899441
+        }
+    }, 
+    {
+        "start": "2012-10-20 10:18:44", 
+        "title": "Internet", 
+        "end": "2012-10-20 10:18:45", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 10:18:44", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0939213, 
+            "lon": 14.3412069
+        }
+    }, 
+    {
+        "start": "2012-10-20 11:18:44", 
+        "title": "Internet", 
+        "end": "2012-10-20 11:18:45", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 11:18:44", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0939213, 
+            "lon": 14.3412069
+        }
+    }, 
+    {
+        "start": "2012-10-20 11:51:41", 
+        "title": "Internet", 
+        "end": "2012-10-20 11:51:42", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 11:51:41", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-20 11:55:52", 
+        "title": "Internet", 
+        "end": "2012-10-20 11:55:53", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 11:55:52", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0939213, 
+            "lon": 14.3412069
+        }
+    }, 
+    {
+        "start": "2012-10-20 12:01:36", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-20 12:01:37", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 12:01:36", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0939213, 
+            "lon": 14.3412069
+        }
+    }, 
+    {
+        "start": "2012-10-20 12:02:36", 
+        "title": "Odchozí SMS", 
+        "end": "2012-10-20 12:02:37", 
+        "options": {
+            "theme": "green", 
+            "description": "Odchozí SMS v 12:02:36", 
+            "tags": "['Odchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0939213, 
+            "lon": 14.3412069
+        }
+    }, 
+    {
+        "start": "2012-10-20 12:55:52", 
+        "title": "Internet", 
+        "end": "2012-10-20 12:55:53", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 12:55:52", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0939213, 
+            "lon": 14.3412069
+        }
+    }, 
+    {
+        "start": "2012-10-20 13:20:38", 
+        "title": "Internet", 
+        "end": "2012-10-20 13:20:39", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 13:20:38", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-20 13:22:43", 
+        "title": "Internet", 
+        "end": "2012-10-20 13:22:44", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 13:22:43", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0939213, 
+            "lon": 14.3412069
+        }
+    }, 
+    {
+        "start": "2012-10-20 13:28:18", 
+        "title": "Internet", 
+        "end": "2012-10-20 13:28:19", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 13:28:18", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-20 13:49:08", 
+        "title": "Internet", 
+        "end": "2012-10-20 13:49:09", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 13:49:08", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0838639, 
+            "lon": 14.3462924
+        }
+    }, 
+    {
+        "start": "2012-10-20 13:50:05", 
+        "title": "Internet", 
+        "end": "2012-10-20 13:50:06", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 13:50:05", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0876553, 
+            "lon": 14.3440224
+        }
+    }, 
+    {
+        "start": "2012-10-20 13:56:08", 
+        "title": "Internet", 
+        "end": "2012-10-20 13:56:09", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 13:56:08", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0876553, 
+            "lon": 14.3440224
+        }
+    }, 
+    {
+        "start": "2012-10-20 13:56:55", 
+        "title": "Internet", 
+        "end": "2012-10-20 13:56:56", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 13:56:55", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0731142, 
+            "lon": 14.3401836
+        }
+    }, 
+    {
+        "start": "2012-10-20 13:57:52", 
+        "title": "Příchozí SMS", 
+        "end": "2012-10-20 13:57:53", 
+        "options": {
+            "theme": "green", 
+            "description": "Příchozí SMS v 13:57:52", 
+            "tags": "['Příchozí SMS']"
+        }, 
+        "point": {
+            "lat": 50.0731142, 
+            "lon": 14.3401836
+        }
+    }, 
+    {
+        "start": "2012-10-20 14:01:58", 
+        "title": "Internet", 
+        "end": "2012-10-20 14:01:59", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 14:01:58", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0731142, 
+            "lon": 14.3401836
+        }
+    }, 
+    {
+        "start": "2012-10-20 14:03:36", 
+        "title": "Internet", 
+        "end": "2012-10-20 14:03:37", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 14:03:36", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0539099, 
+            "lon": 14.3425226
+        }
+    }, 
+    {
+        "start": "2012-10-20 15:03:36", 
+        "title": "Internet", 
+        "end": "2012-10-20 15:03:37", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 15:03:36", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0539099, 
+            "lon": 14.3425226
+        }
+    }, 
+    {
+        "start": "2012-10-20 16:03:36", 
+        "title": "Internet", 
+        "end": "2012-10-20 16:03:37", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 16:03:36", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0539099, 
+            "lon": 14.3425226
+        }
+    }, 
+    {
+        "start": "2012-10-20 17:03:36", 
+        "title": "Internet", 
+        "end": "2012-10-20 17:03:37", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 17:03:36", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0539099, 
+            "lon": 14.3425226
+        }
+    }, 
+    {
+        "start": "2012-10-20 18:03:36", 
+        "title": "Internet", 
+        "end": "2012-10-20 18:03:37", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 18:03:36", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0539099, 
+            "lon": 14.3425226
+        }
+    }, 
+    {
+        "start": "2012-10-20 19:03:36", 
+        "title": "Internet", 
+        "end": "2012-10-20 19:03:37", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 19:03:36", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0539099, 
+            "lon": 14.3425226
+        }
+    }, 
+    {
+        "start": "2012-10-20 19:27:16", 
+        "title": "Internet", 
+        "end": "2012-10-20 19:27:17", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 19:27:16", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0939213, 
+            "lon": 14.3412069
+        }
+    }, 
+    {
+        "start": "2012-10-20 20:27:16", 
+        "title": "Internet", 
+        "end": "2012-10-20 20:27:17", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 20:27:16", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0939213, 
+            "lon": 14.3412069
+        }
+    }, 
+    {
+        "start": "2012-10-20 21:27:16", 
+        "title": "Internet", 
+        "end": "2012-10-20 21:27:17", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 21:27:16", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0939213, 
+            "lon": 14.3412069
+        }
+    }, 
+    {
+        "start": "2012-10-20 22:27:16", 
+        "title": "Internet", 
+        "end": "2012-10-20 22:27:17", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 22:27:16", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0939213, 
+            "lon": 14.3412069
+        }
+    }, 
+    {
+        "start": "2012-10-20 23:27:16", 
+        "title": "Internet", 
+        "end": "2012-10-20 23:27:17", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 23:27:16", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0939213, 
+            "lon": 14.3412069
+        }
+    }, 
+    {
+        "start": "2012-10-20 23:27:16", 
+        "title": "Internet", 
+        "end": "2012-10-20 23:27:17", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 23:27:16", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0939213, 
+            "lon": 14.3412069
+        }
+    }, 
+    {
+        "start": "2012-10-21 00:05:02", 
+        "title": "Internet", 
+        "end": "2012-10-21 00:05:03", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 00:05:02", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-21 01:05:02", 
+        "title": "Internet", 
+        "end": "2012-10-21 01:05:03", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 01:05:02", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-21 02:05:02", 
+        "title": "Internet", 
+        "end": "2012-10-21 02:05:03", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 02:05:02", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-21 03:05:02", 
+        "title": "Internet", 
+        "end": "2012-10-21 03:05:03", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 03:05:02", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-21 03:12:38", 
+        "title": "Internet", 
+        "end": "2012-10-21 03:12:39", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 03:12:38", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0939213, 
+            "lon": 14.3412069
+        }
+    }, 
+    {
+        "start": "2012-10-21 03:48:35", 
+        "title": "Internet", 
+        "end": "2012-10-21 03:48:36", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 03:48:35", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-21 04:30:28", 
+        "title": "Internet", 
+        "end": "2012-10-21 04:30:29", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 04:30:28", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0939213, 
+            "lon": 14.3412069
+        }
+    }, 
+    {
+        "start": "2012-10-21 05:12:36", 
+        "title": "Internet", 
+        "end": "2012-10-21 05:12:37", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 05:12:36", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-21 05:14:11", 
+        "title": "Internet", 
+        "end": "2012-10-21 05:14:12", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 05:14:11", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0939213, 
+            "lon": 14.3412069
+        }
+    }, 
+    {
+        "start": "2012-10-21 06:14:11", 
+        "title": "Internet", 
+        "end": "2012-10-21 06:14:12", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 06:14:11", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0939213, 
+            "lon": 14.3412069
+        }
+    }, 
+    {
+        "start": "2012-10-21 07:14:11", 
+        "title": "Internet", 
+        "end": "2012-10-21 07:14:12", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 07:14:11", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0939213, 
+            "lon": 14.3412069
+        }
+    }, 
+    {
+        "start": "2012-10-21 07:23:14", 
+        "title": "Internet", 
+        "end": "2012-10-21 07:23:15", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 07:23:14", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-21 07:25:00", 
+        "title": "Internet", 
+        "end": "2012-10-21 07:25:01", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 07:25:00", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0939213, 
+            "lon": 14.3412069
+        }
+    }, 
+    {
+        "start": "2012-10-21 07:30:31", 
+        "title": "Internet", 
+        "end": "2012-10-21 07:30:32", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 07:30:31", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-21 08:30:31", 
+        "title": "Internet", 
+        "end": "2012-10-21 08:30:32", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 08:30:31", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-21 09:30:31", 
+        "title": "Internet", 
+        "end": "2012-10-21 09:30:32", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 09:30:31", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-21 10:30:31", 
+        "title": "Internet", 
+        "end": "2012-10-21 10:30:32", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 10:30:31", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-21 11:30:31", 
+        "title": "Internet", 
+        "end": "2012-10-21 11:30:32", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 11:30:31", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-21 11:42:40", 
+        "title": "Internet", 
+        "end": "2012-10-21 11:42:41", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 11:42:40", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0939213, 
+            "lon": 14.3412069
+        }
+    }, 
+    {
+        "start": "2012-10-21 12:42:40", 
+        "title": "Internet", 
+        "end": "2012-10-21 12:42:41", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 12:42:40", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0939213, 
+            "lon": 14.3412069
+        }
+    }, 
+    {
+        "start": "2012-10-21 13:42:40", 
+        "title": "Internet", 
+        "end": "2012-10-21 13:42:41", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 13:42:40", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0939213, 
+            "lon": 14.3412069
+        }
+    }, 
+    {
+        "start": "2012-10-21 14:42:40", 
+        "title": "Internet", 
+        "end": "2012-10-21 14:42:41", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 14:42:40", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0939213, 
+            "lon": 14.3412069
+        }
+    }, 
+    {
+        "start": "2012-10-21 14:53:07", 
+        "title": "Příchozí hovor", 
+        "end": "2012-10-21 14:53:08", 
+        "options": {
+            "theme": "red", 
+            "description": "Příchozí hovor v 14:53:07", 
+            "tags": "['Příchozí hovor']"
+        }, 
+        "point": {
+            "lat": 50.0939213, 
+            "lon": 14.3412069
+        }
+    }, 
+    {
+        "start": "2012-10-21 15:42:40", 
+        "title": "Internet", 
+        "end": "2012-10-21 15:42:41", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 15:42:40", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0939213, 
+            "lon": 14.3412069
+        }
+    }, 
+    {
+        "start": "2012-10-21 15:56:28", 
+        "title": "Internet", 
+        "end": "2012-10-21 15:56:29", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 15:56:28", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-21 15:57:06", 
+        "title": "Internet", 
+        "end": "2012-10-21 15:57:07", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 15:57:06", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0939213, 
+            "lon": 14.3412069
+        }
+    }, 
+    {
+        "start": "2012-10-21 15:58:05", 
+        "title": "Internet", 
+        "end": "2012-10-21 15:58:06", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 15:58:05", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0953116, 
+            "lon": 14.33851
+        }
+    }, 
+    {
+        "start": "2012-10-21 16:12:58", 
+        "title": "Internet", 
+        "end": "2012-10-21 16:12:59", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 16:12:58", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0755381, 
+            "lon": 14.4378005
+        }
+    }, 
+    {
+        "start": "2012-10-21 16:36:47", 
+        "title": "Internet", 
+        "end": "2012-10-21 16:36:48", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 16:36:47", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0461146, 
+            "lon": 14.448643
+        }
+    }, 
+    {
+        "start": "2012-10-21 16:39:49", 
+        "title": "Internet", 
+        "end": "2012-10-21 16:39:50", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 16:39:49", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0461146, 
+            "lon": 14.448643
+        }
+    }, 
+    {
+        "start": "2012-10-21 16:41:09", 
+        "title": "Internet", 
+        "end": "2012-10-21 16:41:10", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 16:41:09", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0441608, 
+            "lon": 14.4438064
+        }
+    }, 
+    {
+        "start": "2012-10-21 16:56:56", 
+        "title": "Odchozí hovor", 
+        "end": "2012-10-21 16:56:57", 
+        "options": {
+            "theme": "red", 
+            "description": "Odchozí hovor v 16:56:56", 
+            "tags": "['Odchozí hovor']"
+        }, 
+        "point": {
+            "lat": 50.0461146, 
+            "lon": 14.448643
+        }
+    }, 
+    {
+        "start": "2012-10-21 17:00:39", 
+        "title": "Internet", 
+        "end": "2012-10-21 17:00:40", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 17:00:39", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0441608, 
+            "lon": 14.4438064
+        }
+    }, 
+    {
+        "start": "2012-10-21 17:51:28", 
+        "title": "Internet", 
+        "end": "2012-10-21 17:51:29", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 17:51:28", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0488957, 
+            "lon": 14.4490492
+        }
+    }, 
+    {
+        "start": "2012-10-21 18:33:08", 
+        "title": "Příchozí hovor", 
+        "end": "2012-10-21 18:33:09", 
+        "options": {
+            "theme": "red", 
+            "description": "Příchozí hovor v 18:33:08", 
+            "tags": "['Příchozí hovor']"
+        }, 
+        "point": {
+            "lat": 50.0488957, 
+            "lon": 14.4490492
+        }
+    }, 
+    {
+        "start": "2012-10-21 18:51:28", 
+        "title": "Internet", 
+        "end": "2012-10-21 18:51:29", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 18:51:28", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0488957, 
+            "lon": 14.4490492
+        }
+    }, 
+    {
+        "start": "2012-10-21 19:51:28", 
+        "title": "Internet", 
+        "end": "2012-10-21 19:51:29", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 19:51:28", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0488957, 
+            "lon": 14.4490492
+        }
+    }, 
+    {
+        "start": "2012-10-21 20:51:28", 
+        "title": "Internet", 
+        "end": "2012-10-21 20:51:29", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 20:51:28", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0488957, 
+            "lon": 14.4490492
+        }
+    }, 
+    {
+        "start": "2012-10-21 21:51:28", 
+        "title": "Internet", 
+        "end": "2012-10-21 21:51:29", 
+        "options": {
+            "theme": "blue", 
+            "description": "Internet v 21:51:28", 
+            "tags": "['Internet']"
+        }, 
+        "point": {
+            "lat": 50.0488957, 
+            "lon": 14.4490492
+        }
+    }
+];
+        document.write(JSON.stringify(converter(dataset)));
+        
+        
+        
+</script>        
+        
+        
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>Data retention</title>
+    <script src="http://maps.google.com/maps?file=api&v=2&key=ABQIAAAASI0kCI-azC8RgbOZzWc3VRRarOQe_TKf_51Omf6UUSOFm7EABRRhO0PO4nBAO9FCmVDuowVwROLo3w"
+      type="text/javascript"></script>
+    <script type="text/javascript" src="lib/jquery-1.6.2.min.js"></script>
+    <script type="text/javascript" src="lib/mxn/mxn.js?(google)"></script>
+    <script type="text/javascript" src="lib/timeline-2.3.0.js"></script>
+    <script src="src/timemap.js" type="text/javascript"></script>
+    <script src="src/manipulation.js" type="text/javascript"></script>
+    <script src="lpoints.js" type="text/javascript"></script>
+	<script type="text/javascript">
+
+var tm;
+var lPoints = getLPoints();
+
+//nastaveni animace
+var animationStepDuration = 30; //cas v milisekundach, po jakem poskocit na dalsi krok  
+var animationStepMinutes = 3; //cas v minutach, o ktery se skoci na casove ose
+                            
+//hranice timeline, nastavi se automaticky z pocatecniho a koncoveho bodu (bylo to fakt easy nakonec)
+var timelineStart = new Date(lPoints[0].start);
+var timelineEnd = new Date(lPoints[lPoints.length-1].end);
+
+
+
+//pomocne funkce pro inkrementace datumu
+Date.prototype.addHours= function(h){
+    this.setHours(this.getHours()+h);
+    return this;
+}
+Date.prototype.addMinutes= function(m){
+    this.setMinutes(this.getMinutes()+m);
+    return this;
+}
+
+
+$(function() {
+
+    var myTheme = Timeline.ClassicTheme.create();
+	   myTheme.autoWidth = false; 
+	   myTheme.timeline_start = timelineStart;
+	   myTheme.timeline_stop  = timelineEnd;
+
+     //nastaveni timeline, tu prvni (0%) nech jak je, ostatni muzes upravit intervaly nebo jednotky. eventSource
+     //rika, ze se na dany timeline maji zobrazit eventy                        
+     var bandInfos = [
+     //prvni timeline je "fiktivni", slouzi k zamereni kratkeho casoveho useku
+     //(radove vterin)
+     Timeline.createBandInfo({
+         width:          "0%", 
+         intervalUnit:   Timeline.DateTime.MINUTE, 
+         intervalPixels: 10000,
+         theme: myTheme       
+     }) ,
+     Timeline.createBandInfo({
+         width:          "80%", 
+         intervalUnit:   Timeline.DateTime.HOUR, 
+         intervalPixels: 150,
+         eventSource: new Timeline.DefaultEventSource(),       
+     }),
+     Timeline.createBandInfo({
+         width:          "20%", 
+         intervalUnit:   Timeline.DateTime.DAY, 
+         intervalPixels: 200       
+     })
+   ];
+   
+    tm = TimeMap.init({
+        mapId: "map",               // Id of map div element (required)
+        timelineId: "timeline",     // Id of timeline div element (required)        
+        bandIntervals: [
+            Timeline.DateTime.HOUR, 
+            Timeline.DateTime.DAY
+        ],
+        bands: bandInfos, 
+        datasets: [
+            {
+                id: "dr",
+                title: "Data retention záznamy",
+                type: "basic",
+                theme: myTheme,
+                options: {
+                    items: getLPoints()
+                }
+            }
+        ]
+    });
+    
+    // filter function for tags
+    var hasSelectedTag = function(item) {
+        // if no tag was selected, everything passes
+        return !window.selectedTag || (
+                // item has tags?
+                item.opts.tags && 
+                // tag found? (note - will work in IE; Timemap extends the Array prototype if necessary)
+                item.opts.tags.indexOf(window.selectedTag) >= 0
+            );
+    };
+    
+    // add our new function to the map and timeline filters
+    tm.addFilter("map", hasSelectedTag); // hide map markers on fail
+    tm.addFilter("timeline", hasSelectedTag); // hide timeline events on fail
+
+    // onChange handler for pulldown menu
+    $('#tag_select').change(function() {
+        window.selectedTag = $(this).val();
+        // run filters
+        tm.filter('map');
+        tm.filter('timeline');
+    });
+});
+
+var currentDate; 
+var repeater;
+
+function tlPlay()
+{
+  if (repeater != null) tlStop();
+  currentDate = new Date(timelineStart.getTime());
+  repeater = setInterval(
+    function(){
+      
+      tm.timeline.getBand(0).setCenterVisibleDate(currentDate);
+      currentDate = currentDate.addMinutes(animationStepMinutes);
+      if (currentDate > timelineEnd) tlStop();  
+    },
+    animationStepDuration);
+   
+   $('.btnPlay').hide();
+   $('.btnStop').show();
+}
+
+function tlStop()
+{
+  clearInterval(repeater);
+  repeater = null;
+  $('.btnPlay').show();
+  $('.btnStop').hide();
+}
+
+    </script>
+    <link href="style.css" type="text/css" rel="stylesheet"/>
+    <style>
+    div#timelinecontainer{ height: 300px; }
+    div#mapcontainer{ height: 400px; }
+    </style>
+  </head>
+
+  <body>
+    <div id="help">
+    <form>
+        <select id="tag_select">
+            <option value="">Veškerá komunikace</option>
+            <option value="Internet">Internet</option>
+            <option value="Příchozí hovor">Příchozí hovory</option>
+            <option value="Odchozí hovor">Odchozí hovory</option>
+            <option value="Příchozí SMS">Příchozí SMS</option>
+            <option value="Odchozí SMS">Odchozí SMS</option>
+        </select>
+    </form>
+    <p><a class="playToggle btnPlay" href="#" onclick="tlPlay();return false"><img src="play.png" alt="Přehrát"></a>
+    <a style="display:none" class="playToggle btnStop" href="#" onclick="tlStop();return false"><img src="stop.png" alt="Zastavit"></a></a></p>
+    </div>
+    <div id="timemap">
+        <div id="timelinecontainer">
+          <div id="timeline"></div>
+        </div>
+        <div id="mapcontainer">
+          <div id="map"></div>
+        </div>
+    </div>
+  </body>
+</html>
